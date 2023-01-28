@@ -7,7 +7,8 @@
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./BoundingBox.hpp"
-#include "./Model.hpp"
+#include "./Vector3.hpp"
+// #include "./Model.hpp"
 
 namespace raylib {
 /**
@@ -238,6 +239,34 @@ class Mesh : public ::Mesh {
     }
 
     /**
+     * Compute mesh bounding box limits with respect to the given transformation
+     */
+    raylib::BoundingBox GetTransformedBoundingBox(raylib::Matrix transform) const {
+        // Get min and max vertex to construct bounds (AABB)
+        raylib::Vector3 minVertex = { 0 };
+        raylib::Vector3 maxVertex = { 0 };
+
+        if (vertices != NULL)
+        {
+            minVertex = raylib::Vector3{ vertices[0], vertices[1], vertices[2] }.Transform(transform);
+            maxVertex = raylib::Vector3{ vertices[0], vertices[1], vertices[2] }.Transform(transform);
+
+            for (int i = 1; i < vertexCount; i++)
+            {
+                minVertex = Vector3Min(minVertex, raylib::Vector3{ vertices[i*3], vertices[i*3 + 1], vertices[i*3 + 2] }.Transform(transform));
+                maxVertex = Vector3Max(maxVertex, raylib::Vector3{ vertices[i*3], vertices[i*3 + 1], vertices[i*3 + 2] }.Transform(transform));
+            }
+        }
+
+        // Create the bounding box
+        raylib::BoundingBox box = {};
+        box.min = minVertex;
+        box.max = maxVertex;
+
+        return box;
+    }
+
+    /**
      * Compute mesh bounding box limits
      */
     operator raylib::BoundingBox() {
@@ -255,14 +284,14 @@ class Mesh : public ::Mesh {
     /**
      * Load model from generated mesh
      */
-    inline raylib::Model LoadModelFrom() const {
+    inline Model LoadModelFrom() const {
         return ::LoadModelFromMesh(*this);
     }
 
     /**
      * Load model from generated mesh
      */
-    operator raylib::Model() {
+    operator Model() {
         return ::LoadModelFromMesh(*this);
     }
 

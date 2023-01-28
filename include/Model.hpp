@@ -6,6 +6,7 @@
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./Mesh.hpp"
+#include "./Vector3.hpp"
 #include "./RaylibException.hpp"
 
 namespace raylib {
@@ -183,10 +184,41 @@ class Model : public ::Model {
     }
 
     /**
+     * Compute model bounding box limits with respect to the Model's transformation (considers all meshes)
+     * This function is pretty expensive!
+     */
+    BoundingBox GetTransformedBoundingBox() const {
+        BoundingBox bounds = {};
+
+        if (meshCount > 0)
+        {
+            Vector3 temp = { 0 };
+            bounds = (*(Mesh*)(&meshes[0])).GetTransformedBoundingBox(transform);
+
+            for (int i = 1; i < meshCount; i++)
+            {
+                BoundingBox tempBounds = (*(Mesh*)(&meshes[i])).GetTransformedBoundingBox(transform);
+
+                temp.x = (bounds.min.x < tempBounds.min.x)? bounds.min.x : tempBounds.min.x;
+                temp.y = (bounds.min.y < tempBounds.min.y)? bounds.min.y : tempBounds.min.y;
+                temp.z = (bounds.min.z < tempBounds.min.z)? bounds.min.z : tempBounds.min.z;
+                bounds.min = temp;
+
+                temp.x = (bounds.max.x > tempBounds.max.x)? bounds.max.x : tempBounds.max.x;
+                temp.y = (bounds.max.y > tempBounds.max.y)? bounds.max.y : tempBounds.max.y;
+                temp.z = (bounds.max.z > tempBounds.max.z)? bounds.max.z : tempBounds.max.z;
+                bounds.max = temp;
+            }
+        }
+
+        return bounds;
+    }
+
+    /**
      * Compute model bounding box limits (considers all meshes)
      */
     operator BoundingBox() const {
-        return ::GetModelBoundingBox(*this);
+        return GetBoundingBox();
     }
 
     /**
