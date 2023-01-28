@@ -99,15 +99,19 @@ class Vector4 : public ::Vector4 {
         QuaternionToAxisAngle(*this, outAxis, outAngle);
     }
 
+    inline void ToAxisAngle(Vector3& outAxis, Radian& outAngle) {
+        ToAxisAngle((::Vector3*)&outAxis, (float*)&outAngle);
+    }
+
     /**
      * Get the rotation angle and axis for a given quaternion
      */
-    std::pair<Vector3, float> ToAxisAngle() {
+    std::pair<Vector3, Radian> ToAxisAngle() {
         Vector3 outAxis;
         float outAngle;
         QuaternionToAxisAngle(*this, &outAxis, &outAngle);
 
-        return std::pair<Vector3, float>(outAxis, outAngle);
+        return std::pair<Vector3, Radian>(outAxis, outAngle);
     }
 
     inline Vector4 Transform(const ::Matrix& matrix) {
@@ -126,7 +130,7 @@ class Vector4 : public ::Vector4 {
         return ::QuaternionFromMatrix(matrix);
     }
 
-    static inline Vector4 FromAxisAngle(const ::Vector3& axis, const float angle) {
+    static inline Vector4 FromAxisAngle(const ::Vector3& axis, const Radian angle) {
         return ::QuaternionFromAxisAngle(axis, angle);
     }
 

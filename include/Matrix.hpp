@@ -129,7 +129,7 @@ class Matrix : public ::Matrix {
         return ::MatrixTranslate(x, y, z);
     }
 
-    static Matrix Rotate(Vector3 axis, float angle) {
+    static Matrix Rotate(Vector3 axis, Radian angle) {
         return ::MatrixRotate(axis, angle);
     }
 
@@ -137,15 +137,19 @@ class Matrix : public ::Matrix {
         return ::MatrixRotateXYZ(angle);
     }
 
-    static Matrix RotateX(float angle) {
+    static Matrix RotateXYZ(Radian x, Radian y, Radian z) {
+        return RotateXYZ(Vector3{x, y, z});
+    }
+
+    static Matrix RotateX(Radian angle) {
         return ::MatrixRotateX(angle);
     }
 
-    static Matrix RotateY(float angle) {
+    static Matrix RotateY(Radian angle) {
         return ::MatrixRotateY(angle);
     }
 
-    static Matrix RotateZ(float angle) {
+    static Matrix RotateZ(Radian angle) {
         return ::MatrixRotateZ(angle);
     }
 

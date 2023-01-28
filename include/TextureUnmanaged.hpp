@@ -9,6 +9,7 @@
 #include "./Material.hpp"
 #include "./RaylibException.hpp"
 #include "./Image.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 /**
@@ -216,7 +217,7 @@ class TextureUnmanaged : public ::Texture {
      *
      * @see ::DrawTextureEx()
      */
-    inline void Draw(::Vector2 position, float rotation, float scale = 1.0f,
+    inline void Draw(::Vector2 position, Degree rotation, float scale = 1.0f,
             ::Color tint = {255, 255, 255, 255}) const {
         ::DrawTextureEx(*this, position, rotation, scale, tint);
     }
@@ -237,7 +238,7 @@ class TextureUnmanaged : public ::Texture {
      * @see ::DrawTexturePro()
      */
     inline void Draw(::Rectangle sourceRec, ::Rectangle destRec, ::Vector2 origin = {0, 0},
-            float rotation = 0, ::Color tint = {255, 255, 255, 255}) const {
+            Degree rotation = 0, ::Color tint = {255, 255, 255, 255}) const {
         ::DrawTexturePro(*this, sourceRec, destRec, origin, rotation, tint);
     }
 
@@ -247,7 +248,7 @@ class TextureUnmanaged : public ::Texture {
      * @see ::DrawTextureNPatch()
      */
     inline void Draw(::NPatchInfo nPatchInfo, ::Rectangle destRec, ::Vector2 origin = {0, 0},
-            float rotation = 0, ::Color tint = {255, 255, 255, 255}) const {
+            Radian rotation = 0, ::Color tint = {255, 255, 255, 255}) const {
         ::DrawTextureNPatch(*this, nPatchInfo, destRec, origin, rotation, tint);
     }
 
@@ -280,7 +281,7 @@ class TextureUnmanaged : public ::Texture {
      */
     inline void DrawBillboard(const ::Camera& camera,
             ::Rectangle source, Vector3 position,
-            ::Vector3 up, Vector2 size, Vector2 origin, float rotation = 0.0f,
+            ::Vector3 up, Vector2 size, Vector2 origin, Degree rotation = 0.0f,
             ::Color tint = {255, 255, 255, 255}) const {
         DrawBillboardPro(camera, *this, source, position, up, size, origin, rotation, tint);
     }

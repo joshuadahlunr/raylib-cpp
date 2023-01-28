@@ -275,7 +275,7 @@ class Vector3 : public ::Vector3 {
     inline void DrawCircle3D(
             float radius,
             const ::Vector3& rotationAxis,
-            float rotationAngle,
+            Radian rotationAngle,
             Color color) const {
         ::DrawCircle3D(*this, radius, rotationAxis, rotationAngle, color);
     }

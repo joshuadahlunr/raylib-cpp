@@ -148,7 +148,7 @@ class Model : public ::Model {
     inline void Draw(
             ::Vector3 position,
             ::Vector3 rotationAxis,
-            float rotationAngle = 0.0f,
+            Radian rotationAngle = 0.0f,
             ::Vector3 scale = {1.0f, 1.0f, 1.0f},
             ::Color tint = {255, 255, 255, 255}) const {
         ::DrawModelEx(*this, position, rotationAxis, rotationAngle, scale, tint);
@@ -169,7 +169,7 @@ class Model : public ::Model {
     inline void DrawWires(
             ::Vector3 position,
             ::Vector3 rotationAxis,
-            float rotationAngle = 0.0f,
+            Radian rotationAngle = 0.0f,
             ::Vector3 scale = {1.0f, 1.0f, 1.0f},
             ::Color tint = {255, 255, 255, 255}) const {
         ::DrawModelWiresEx(*this, position, rotationAxis, rotationAngle, scale, tint);

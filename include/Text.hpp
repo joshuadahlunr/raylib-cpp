@@ -114,7 +114,7 @@ class Text {
      *
      * @see DrawTextPro()
      */
-    inline void Draw(const ::Vector2& position, float rotation, const ::Vector2& origin = {0, 0}) const {
+    inline void Draw(const ::Vector2& position, Radian rotation, const ::Vector2& origin = {0, 0}) const {
         ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, color);
     }
 
@@ -198,7 +198,7 @@ class Text {
             const std::string& text,
             const ::Vector2& position,
             const ::Vector2& origin,
-            const float rotation,
+            const Radian rotation,
             const float fontSize,
             const float spacing,
             const ::Color& color) {

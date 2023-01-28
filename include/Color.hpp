@@ -5,6 +5,7 @@
 
 #include "./raylib.hpp"
 #include "./Vector4.hpp"
+#include "./RadiansDegrees.hpp"
 #include "./raylib-cpp-utils.hpp"
 
 namespace raylib {
@@ -183,7 +184,7 @@ class Color : public ::Color {
         ::DrawRectangleRec(rec, *this);
     }
 
-    inline void DrawRectangle(::Rectangle rec, ::Vector2 origin, float rotation) const {
+    inline void DrawRectangle(::Rectangle rec, ::Vector2 origin, Degree rotation) const {
         ::DrawRectanglePro(rec, origin, rotation, *this);
     }
 

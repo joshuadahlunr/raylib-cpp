@@ -48,6 +48,7 @@
 #include "./ModelAnimation.hpp"
 #include "./Mouse.hpp"
 #include "./Music.hpp"
+#include "./RadiansDegrees.hpp"
 #include "./Ray.hpp"
 #include "./RaylibException.hpp"
 #include "./RayCollision.hpp"

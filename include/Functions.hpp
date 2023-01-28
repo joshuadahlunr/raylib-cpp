@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "./raylib.hpp"
+#include "./RadiansDegrees.hpp"
 
 /**
  * Allow changing the declare type for all raylib-cpp global functions. Defaults to static.
@@ -256,7 +257,7 @@ RLCPPAPI inline void DrawTextEx(const Font& font, const std::string& text, Vecto
  * Draw text using Font and pro parameters (rotation)
  */
 RLCPPAPI inline void DrawTextPro(const Font& font, const std::string& text, Vector2 position,
-        Vector2 origin, float rotation, float fontSize, float spacing, ::Color tint) {
+        Vector2 origin, Radian rotation, float fontSize, float spacing, ::Color tint) {
     ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, tint);
 }
 
