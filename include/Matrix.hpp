@@ -16,6 +16,11 @@ namespace raylib {
  */
 class Matrix : public ::Matrix {
  public:
+    struct LocalSpace_t {};
+    constexpr static LocalSpace_t LocalSpace{};
+    struct GlobalSpace_t {};
+    constexpr static GlobalSpace_t GlobalSpace{};
+
     Matrix(const ::Matrix& mat) : ::Matrix{
             mat.m0, mat.m4, mat.m8, mat.m12,
             mat.m1, mat.m5, mat.m9, mat.m13,
@@ -91,78 +96,338 @@ class Matrix : public ::Matrix {
     /**
      * Returns the trace of the matrix (sum of the values along the diagonal)
      */
-    float Trace() const {
+    inline float Trace() const {
         return ::MatrixTrace(*this);
     }
 
     /**
      * Transposes provided matrix
      */
-    Matrix Transpose() const {
+    inline Matrix Transpose() const {
         return ::MatrixTranspose(*this);
     }
 
-    Matrix Invert() const {
+    /**
+     * Inverts provided matrix
+    */
+    inline Matrix Invert() const {
         return ::MatrixInvert(*this);
     }
 
+    /**
+     * Creates an identity matrix
+    */
     static Matrix Identity() {
         return ::MatrixIdentity();
     }
 
-    Matrix Add(const ::Matrix& right) {
+    /**
+     * Creates a matrix that when multiplied by the current matrix will translate back to the origin
+     * (New function not provided by raylib)
+    */
+    inline Matrix TranslateToOrigin() const {
+        return CreateTranslate(-m12, -m13, -m14);
+    }
+
+    /**
+     * Elementwise matrix addition
+    */
+    inline Matrix Add(const ::Matrix& right) const {
         return ::MatrixAdd(*this, right);
     }
 
-    Matrix operator+(const ::Matrix& matrix) {
-            return ::MatrixAdd(*this, matrix);
+    /**
+     * Elementwise matrix addition
+    */
+    inline Matrix operator+(const ::Matrix& matrix) const {
+        return ::MatrixAdd(*this, matrix);
     }
 
-    Matrix Subtract(const ::Matrix& right) {
+    /**
+     * Elementwise matrix subtraction
+    */
+    inline Matrix Subtract(const ::Matrix& right) const {
         return ::MatrixSubtract(*this, right);
     }
 
-    Matrix operator-(const ::Matrix& matrix) {
+    /**
+     * Elementwise matrix subtraction
+    */
+    inline Matrix operator-(const ::Matrix& matrix) const {
         return ::MatrixSubtract(*this, matrix);
     }
 
-    static Matrix Translate(float x, float y, float z) {
+    /**
+     * Matrix multiplication
+    */
+    inline Matrix Multiply(const ::Matrix& right) const {
+        return ::MatrixMultiply(*this, right);
+    }
+
+    /**
+     * Matrix multiplication
+    */
+    inline Matrix operator*(const ::Matrix& matrix) const {
+        return ::MatrixMultiply(*this, matrix);
+    }
+
+    /**
+     * Creates a translation matrix
+    */
+    static Matrix CreateTranslate(float x, float y, float z) {
         return ::MatrixTranslate(x, y, z);
     }
 
-    static Matrix Rotate(Vector3 axis, Radian angle) {
+    /** 
+     * Translates the current matrix in global space
+    */
+    inline Matrix Translate(GlobalSpace_t, float x, float y, float z) const {
+        return (*this) * CreateTranslate(x, y, z);
+    }
+
+    /**
+     * Translates the current matrix in local space
+    */
+    inline Matrix Translate(LocalSpace_t, float x, float y, float z) const {
+        return CreateTranslate(x, y, z) * (*this);
+    }
+
+    /**
+     * Translates the current matrix in global space
+    */
+    inline Matrix Translate(float x, float y, float z) const {
+        return Translate(GlobalSpace, x, y, z);
+    }
+
+    /**
+     * Creates a translation matrix
+    */
+    static Matrix CreateTranslate(Vector3 translation) {
+        return ::MatrixTranslate(translation.x, translation.y, translation.z);
+    }
+
+    /** 
+     * Translates the current matrix in global space
+    */
+    Matrix Translate(GlobalSpace_t, Vector3 translation) const {
+        return (*this) * CreateTranslate(translation.x, translation.y, translation.z);
+    }
+
+    /**
+     * Translates the current matrix in local space
+    */
+    Matrix Translate(LocalSpace_t, Vector3 translation) const {
+        return CreateTranslate(translation.x, translation.y, translation.z) * (*this);
+    }
+
+    /**
+     * Translates the current matrix in global space
+    */
+    inline Matrix Translate(Vector3 translation) const {
+        return Translate(GlobalSpace, translation.x, translation.y, translation.z);
+    }
+
+    /**
+     * Creates a rotation matrix around the given axis
+    */
+    static Matrix CreateRotate(Vector3 axis, Radian angle) {
         return ::MatrixRotate(axis, angle);
     }
 
     /**
-     * @note: angle is stored in radians 
-     */
-    static Matrix RotateXYZ(Vector3 angle) {
+     * Rotates the current matrix in global space around the given axis
+    */
+    Matrix Rotate(GlobalSpace_t, Vector3 axis, Radian angle) const {
+        return (*this) * CreateRotate(axis, angle);
+    }
+
+    /**
+     * Rotates the current matrix in local space around the given axis
+    */
+    Matrix Rotate(LocalSpace_t, Vector3 axis, Radian angle) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateRotate(axis, angle) * toOrigin.Invert();
+    }
+
+    /**
+     * Rotates the current matrix in local space around the given axis
+    */
+    inline Matrix Rotate(Vector3 axis, Radian angle) const {
+        return Rotate(LocalSpace, axis, angle);
+    }
+
+    /**
+     * Creates a rotation matrix using the provided euler angles
+    */
+    static Matrix CreateRotateXYZ(Vector3 angle) {
         return ::MatrixRotateXYZ(angle);
     }
 
-    static Matrix RotateX(Radian angle) {
+    /**
+     * Rotates the current matrix using the provided euler angles in global space
+    */
+    Matrix RotateXYZ(GlobalSpace_t, Vector3 angle) const {
+        return (*this) * CreateRotateXYZ(angle);
+    }
+
+    /**
+     * Rotates the current matrix using the provided euler angles in local space
+    */
+    Matrix RotateXYZ(LocalSpace_t, Vector3 angle) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateRotateXYZ(angle) * toOrigin.Invert();
+    }
+
+    /**
+     * Rotates the current matrix using the provided euler angles in local space
+    */
+    inline Matrix RotateXYZ(Vector3 angle) const {
+        return RotateXYZ(LocalSpace, angle);
+    }
+
+    /**
+     * Creates a rotation matrix using the provided euler angles
+    */
+    static Matrix CreateRotateXYZ(Radian x, Radian y, Radian z) {
+        return CreateRotateXYZ(Vector3{x, y, z});
+    }
+
+    /**
+     * Rotates the current matrix using the provided euler angles in global space
+    */
+    Matrix RotateXYZ(GlobalSpace_t, Radian x, Radian y, Radian z) const {
+        return (*this) * CreateRotateXYZ(x, y, z);
+    }
+
+    /**
+     * Rotates the current matrix using the provided euler angles in local space
+    */
+    Matrix RotateXYZ(LocalSpace_t, Radian x, Radian y, Radian z) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateRotateXYZ(x, y, z) * toOrigin.Invert();
+    }
+
+    /**
+     * Rotates the current matrix using the provided euler angles in local space
+    */
+    inline Matrix RotateXYZ(Radian x, Radian y, Radian z) const {
+        return RotateXYZ(LocalSpace, x, y, z);
+    }
+
+    /**
+     * Creates a rotation matrix around the X axis
+    */
+    static Matrix CreateRotateX(Radian angle) {
         return ::MatrixRotateX(angle);
     }
 
-    static Matrix RotateY(Radian angle) {
+    /**
+     * Rotates the current matrix in global space around the X axis
+    */
+    Matrix RotateX(GlobalSpace_t, Radian angle) const {
+        return (*this) * CreateRotateX(angle);
+    }
+
+    /**
+     * Rotates the current matrix in local space around the X axis
+    */
+    Matrix RotateX(LocalSpace_t, Radian angle) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateRotateX(angle) * toOrigin.Invert();
+    }
+
+    /**
+     * Rotates the current matrix in local space around the X axis
+    */
+    inline Matrix RotateX(Radian angle) const {
+        return RotateX(LocalSpace, angle);
+    }
+
+    /**
+     * Creates a rotation matrix around the Y axis
+    */
+    static Matrix CreateRotateY(Radian angle) {
         return ::MatrixRotateY(angle);
     }
 
-    static Matrix RotateZ(Radian angle) {
+    /**
+     * Rotates the current matrix in global space around the Y axis
+    */
+    Matrix RotateY(GlobalSpace_t, Radian angle) const {
+        return (*this) * CreateRotateY(angle);
+    }
+
+    /**
+     * Rotates the current matrix in local space around the Y axis
+    */
+    Matrix RotateY(LocalSpace_t, Radian angle) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateRotateY(angle) * toOrigin.Invert();
+    }
+
+    /**
+     * Rotates the current matrix in local space around the Y axis
+    */
+    inline Matrix RotateY(Radian angle) const {
+        return RotateY(LocalSpace, angle);
+    }
+
+    /**
+     * Creates a rotation matrix around the given axis
+    */
+    static Matrix CreateRotateZ(Radian angle) {
         return ::MatrixRotateZ(angle);
     }
 
-    static Matrix Scale(float x, float y, float z) {
+    /**
+     * Rotates the current matrix in global space around the Z axis
+    */
+    Matrix RotateZ(GlobalSpace_t, Radian angle) const {
+        return (*this) * CreateRotateZ(angle);
+    }
+
+    /**
+     * Rotates the current matrix in local space around the Z axis
+    */
+    Matrix RotateZ(LocalSpace_t, Radian angle) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateRotateZ(angle) * toOrigin.Invert();
+    }
+
+    /**
+     * Rotates the current matrix in local space around the Z axis
+    */
+    inline Matrix RotateZ(Radian angle) const {
+        return RotateZ(LocalSpace, angle);
+    }
+
+    /**
+     * Creates a scale matrix
+    */
+    static Matrix CreateScale(float x, float y, float z) {
         return ::MatrixScale(x, y, z);
     }
 
-    Matrix Multiply(const ::Matrix& right) const {
-        return ::MatrixMultiply(*this, right);
+    /**
+     * Scales the current matrix in global space
+    */
+    Matrix Scale(GlobalSpace_t, float x, float y, float z) const {
+        return (*this) * CreateScale(x, y, z);
     }
 
-    Matrix operator*(const ::Matrix& matrix) {
-        return ::MatrixMultiply(*this, matrix);
+    /**
+     * Scales the current matrix in local space
+    */
+    Matrix Scale(LocalSpace_t, float x, float y, float z) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateScale(x, y, z) * toOrigin.Invert();
+    }
+
+    /**
+     * Scales the current matrix in local space
+    */
+    inline Matrix Scale(float x, float y, float z) const {
+        return Scale(LocalSpace, x, y, z);
     }
 
     static Matrix Frustum(double left, double right, double bottom, double top,
