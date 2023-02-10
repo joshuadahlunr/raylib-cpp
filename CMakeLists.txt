@@ -20,7 +20,9 @@ add_subdirectory(include)
 
 # Include Raylib and OIS
 add_subdirectory(raylib)
+set(OIS_BUILD_SHARED_LIBS off CACHE BOOL "Build shared libraries")
 add_subdirectory(OIS)
+add_subdirectory(raygui/projects/CMake)
 
 # Examples
 if(BUILD_RAYLIB_CPP_EXAMPLES)

@@ -4,3 +4,6 @@
 [submodule "OIS"]
 	path = OIS
 	url = https://github.com/wgois/OIS.git
+[submodule "raygui"]
+	path = raygui
+	url = https://github.com/joshuadahlunr/raygui.git
