@@ -55,7 +55,7 @@ int main() {
                         DrawRectangle(0, 85 + 40*i, screenWidth, 40, Fade(LIGHTGRAY, 0.3f));
 
                     // Display the path to the dropped file.
-                    raylib::DrawText(droppedFiles[i].c_str(), 120, 100 + 40 * i, 10, GRAY);
+                    raylib::DrawText(droppedFiles[i].data(), 120, 100 + 40 * i, 10, GRAY);
                 }
 
                 raylib::DrawText("Drop new files...", 100, 110 + 40 * droppedFiles.size(), 20, DARKGRAY);

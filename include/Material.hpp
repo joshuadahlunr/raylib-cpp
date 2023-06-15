@@ -44,10 +44,10 @@ class Material : public ::Material {
     /**
      * Load materials from model file
      */
-    static std::vector<Material> Load(const std::string& fileName) {
+    static std::vector<Material> Load(const std::string_view fileName) {
         int count = 0;
         // TODO(RobLoach): Material::Load() possibly leaks the materials array.
-        ::Material* materials = ::LoadMaterials(fileName.c_str(), &count);
+        ::Material* materials = ::LoadMaterials(fileName.data(), &count);
         return std::vector<Material>(materials, materials + count);
     }
 

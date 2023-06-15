@@ -201,13 +201,13 @@ UnloadDirectoryFiles(files);
 std::vector<std::string> files = raylib::GetDirectoryFiles(".");
 TraceLog(LOG_INFO, "Count: %i", files.size());
 for (auto& file : files) {
-    TraceLog(LOG_INFO, "File: %s", file.c_str());
+    TraceLog(LOG_INFO, "File: %s", file.data());
 }
 ```
 
 ### String Functions
 
-Many of the raylib functions have `std::string`-related overrides to allow calling them directly with `std::string`s and avoid having to use the `.c_str()` method.
+Many of the raylib functions have `std::string`-related overrides to allow calling them directly with `std::string`s and avoid having to use the `.data()` method.
 
 ``` cpp
 // raylib

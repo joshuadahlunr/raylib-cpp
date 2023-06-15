@@ -20,8 +20,8 @@ class Shader : public ::Shader {
 
     Shader(unsigned int id, int* locs = nullptr) : ::Shader{id, locs} {}
 
-    Shader(const std::string& vsFileName, const std::string& fsFileName) {
-        set(::LoadShader(vsFileName.c_str(), fsFileName.c_str()));
+    Shader(const std::string_view vsFileName, const std::string_view fsFileName) {
+        set(::LoadShader(vsFileName.data(), fsFileName.data()));
     }
 
     Shader(const char* vsFileName, const char* fsFileName) {
@@ -42,8 +42,8 @@ class Shader : public ::Shader {
      *
      * @see ::LoadShader
      */
-    static ::Shader Load(const std::string& vsFileName, const std::string& fsFileName) {
-        return ::LoadShader(vsFileName.c_str(), fsFileName.c_str());
+    static ::Shader Load(const std::string_view vsFileName, const std::string_view fsFileName) {
+        return ::LoadShader(vsFileName.data(), fsFileName.data());
     }
 
     /**
@@ -51,8 +51,8 @@ class Shader : public ::Shader {
      *
      * @see ::LoadShaderFromMemory
      */
-    static ::Shader LoadFromMemory(const std::string& vsCode, const std::string& fsCode) {
-        return ::LoadShaderFromMemory(vsCode.c_str(), fsCode.c_str());
+    static ::Shader LoadFromMemory(const std::string_view vsCode, const std::string_view fsCode) {
+        return ::LoadShaderFromMemory(vsCode.data(), fsCode.data());
     }
 
     GETTERSETTER(unsigned int, Id, id)
@@ -116,8 +116,8 @@ class Shader : public ::Shader {
      *
      * @see GetShaderLocation()
      */
-    inline int GetLocation(const std::string& uniformName) const {
-        return ::GetShaderLocation(*this, uniformName.c_str());
+    inline int GetLocation(const std::string_view uniformName) const {
+        return ::GetShaderLocation(*this, uniformName.data());
     }
 
     /**
@@ -125,8 +125,8 @@ class Shader : public ::Shader {
      *
      * @see GetShaderLocationAttrib()
      */
-    inline int GetLocationAttrib(const std::string& attribName) const {
-        return ::GetShaderLocationAttrib(*this, attribName.c_str());
+    inline int GetLocationAttrib(const std::string_view attribName) const {
+        return ::GetShaderLocationAttrib(*this, attribName.data());
     }
 
     /**

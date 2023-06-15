@@ -48,7 +48,7 @@ class Text {
      * @param spacing The spacing of the text.
      */
     Text(
-            const std::string& text = "",
+            const std::string_view text = "",
             float fontSize = 10,
             const ::Color& color = WHITE,
             const ::Font& font = ::GetFontDefault(),
@@ -72,7 +72,7 @@ class Text {
      */
     Text(
             const ::Font& font,
-            const std::string& text = "",
+            const std::string_view text = "",
             float fontSize = 10,
             float spacing = 0,
             const ::Color& color = WHITE) :
@@ -94,7 +94,7 @@ class Text {
      * Draw text with values in class.
      */
     inline void Draw(const ::Vector2& position) const {
-        ::DrawTextEx(font, text.c_str(), position, fontSize, spacing, color);
+        ::DrawTextEx(font, text.data(), position, fontSize, spacing, color);
     }
 
     /**
@@ -102,7 +102,7 @@ class Text {
      */
     inline void Draw(int posX, int posY) const {
         ::DrawTextEx(font,
-            text.c_str(),
+            text.data(),
             { static_cast<float>(posX), static_cast<float>(posY) },
             fontSize,
             spacing,
@@ -115,21 +115,21 @@ class Text {
      * @see DrawTextPro()
      */
     inline void Draw(const ::Vector2& position, Radian rotation, const ::Vector2& origin = {0, 0}) const {
-        ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, color);
+        ::DrawTextPro(font, text.data(), position, origin, rotation, fontSize, spacing, color);
     }
 
     /**
      * Measure string width for default font
      */
     inline int Measure() {
-        return ::MeasureText(text.c_str(), static_cast<int>(fontSize));
+        return ::MeasureText(text.data(), static_cast<int>(fontSize));
     }
 
     /**
      * Measure string size for Font
      */
     inline Vector2 MeasureEx() {
-        return ::MeasureTextEx(font, text.c_str(), fontSize, spacing);
+        return ::MeasureTextEx(font, text.data(), fontSize, spacing);
     }
 
     Text& operator=(const Text& other) {
@@ -152,12 +152,12 @@ class Text {
      * @see ::DrawText
      */
     static inline void Draw(
-            const std::string& text,
+            const std::string_view text,
             const int posX,
             const int posY,
             const int fontSize,
             const ::Color& color) {
-        ::DrawText(text.c_str(), posX, posY, fontSize, color);
+        ::DrawText(text.data(), posX, posY, fontSize, color);
     }
 
     /**
@@ -166,11 +166,11 @@ class Text {
      * @see ::DrawText
      */
     static inline void Draw(
-            const std::string& text,
+            const std::string_view text,
             const ::Vector2& pos,
             const int fontSize,
             const ::Color& color) {
-        ::DrawText(text.c_str(), static_cast<int>(pos.x), static_cast<int>(pos.y), fontSize, color);
+        ::DrawText(text.data(), static_cast<int>(pos.x), static_cast<int>(pos.y), fontSize, color);
     }
 
     /**
@@ -180,12 +180,12 @@ class Text {
      */
     static inline void Draw(
             const ::Font& font,
-            const std::string& text,
+            const std::string_view text,
             const ::Vector2& position,
             const float fontSize,
             const float spacing,
             const ::Color& color) {
-        ::DrawTextEx(font, text.c_str(), position, fontSize, spacing, color);
+        ::DrawTextEx(font, text.data(), position, fontSize, spacing, color);
     }
 
     /**
@@ -195,14 +195,14 @@ class Text {
      */
     static inline void Draw(
             const ::Font& font,
-            const std::string& text,
+            const std::string_view text,
             const ::Vector2& position,
             const ::Vector2& origin,
             const Radian rotation,
             const float fontSize,
             const float spacing,
             const ::Color& color) {
-        ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, color);
+        ::DrawTextPro(font, text.data(), position, origin, rotation, fontSize, spacing, color);
     }
 };
 }  // namespace raylib
