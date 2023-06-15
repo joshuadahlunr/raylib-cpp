@@ -18,6 +18,10 @@ option(BUILD_RAYLIB_CPP_EXAMPLES "Examples" ${RAYLIB_CPP_IS_MAIN})
 # Include Directory
 add_subdirectory(include)
 
+# Include Raylib and OIS
+add_subdirectory(raylib)
+add_subdirectory(OIS)
+
 # Examples
 if(BUILD_RAYLIB_CPP_EXAMPLES)
     add_subdirectory(examples)
