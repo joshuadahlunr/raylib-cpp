@@ -41,6 +41,15 @@ class Music : public ::Music {
         Load(fileType, data, dataSize);
     }
 
+    /**
+     * Load music stream from memory
+     *
+     * @throws raylib::RaylibException Throws if the music failed to load.
+     */
+    Music(const std::string_view fileType, std::span<unsigned char> data) {
+        Load(fileType, data);
+    }
+
     Music(const Music&) = delete;
 
     Music(Music&& other) {
@@ -209,6 +218,18 @@ class Music : public ::Music {
      */
     void Load(const std::string_view fileType, unsigned char* data, int dataSize) {
         set(::LoadMusicStreamFromMemory(fileType.data(), data, dataSize));
+        if (!IsReady()) {
+            throw RaylibException(TextFormat("Failed to load Music from %s file dat", fileType.data()));
+        }
+    }
+
+    /**
+     * Load music stream from memory
+     *
+     * @throws raylib::RaylibException Throws if the music failed to load.
+     */
+    void Load(const std::string_view fileType, std::span<unsigned char> data) {
+        set(::LoadMusicStreamFromMemory(fileType.data(), data.data(), data.size()));
         if (!IsReady()) {
             throw RaylibException(TextFormat("Failed to load Music from %s file dat", fileType.data()));
         }

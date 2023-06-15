@@ -3,6 +3,7 @@
 
 #include <string>
 #include <string_view>
+#include <span>
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
@@ -60,6 +61,19 @@ class Font : public ::Font {
     }
 
     /**
+     * Loads a Font from the given file, with generation parameters.
+     *
+     * @param fileName The file name of the font to load.
+     *
+     * @throws raylib::RaylibException Throws if the given font failed to initialize.
+     *
+     * @see ::LoadFontEx
+     */
+    Font(const std::string_view fileName, int fontSize, std::span<int> fontChars)  {
+        Load(fileName, fontSize, fontChars.data(), fontChars.size());
+    }
+
+    /**
      * Loads a Font from the given image with a color key.
      *
      * @param image The image to load the fond from.
@@ -82,6 +96,11 @@ class Font : public ::Font {
     Font(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
             int *fontChars, int charsCount)  {
         Load(fileType, fileData, dataSize, fontSize, fontChars, charsCount);
+    }
+
+    Font(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
+            std::span<int> fontChars)  {
+        Load(fileType, fileData, dataSize, fontSize, fontChars.data(), fontChars.size());
     }
 
     Font(const Font&) = delete;
@@ -188,6 +207,13 @@ class Font : public ::Font {
         }
     }
 
+    void Load(const std::string_view fileName, int fontSize, std::span<int> fontChars)  {
+        set(::LoadFontEx(fileName.data(), fontSize, fontChars.data(), fontChars.size()));
+        if (!IsReady()) {
+            throw new RaylibException("Failed to load Font with from file with font size: " + std::string(fileName));
+        }
+    }
+
     void Load(const ::Image& image, ::Color key, int firstChar) {
         set(::LoadFontFromImage(image, key, firstChar));
         if (!IsReady()) {
@@ -199,6 +225,15 @@ class Font : public ::Font {
             int *fontChars, int charsCount)  {
         set(::LoadFontFromMemory(fileType.data(), fileData, dataSize, fontSize, fontChars,
             charsCount));
+        if (!IsReady()) {
+            throw new RaylibException("Failed to load Font " + std::string(fileType) + " with from file data");
+        }
+    }
+
+    void Load(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
+            std::span<int> fontChars)  {
+        set(::LoadFontFromMemory(fileType.data(), fileData, dataSize, fontSize, fontChars.data(),
+            fontChars.size()));
         if (!IsReady()) {
             throw new RaylibException("Failed to load Font " + std::string(fileType) + " with from file data");
         }
@@ -262,6 +297,18 @@ class Font : public ::Font {
             ::Color tint = { 255, 255, 255, 255 }) const {
         ::DrawTextCodepoints(*this,
             codepoints, count,
+            position, fontSize,
+            spacing, tint);
+    }
+
+    /**
+     * Draw multiple character (codepoint)
+     */
+    inline void DrawText(std::span<const int> codepoints, ::Vector2 position,
+            float fontSize, float spacing,
+            ::Color tint = { 255, 255, 255, 255 }) const {
+        ::DrawTextCodepoints(*this,
+            codepoints.data(), codepoints.size(),
             position, fontSize,
             spacing, tint);
     }

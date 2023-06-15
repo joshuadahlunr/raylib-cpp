@@ -211,6 +211,13 @@ class Mesh : public ::Mesh {
     }
 
     /**
+     * Draw multiple mesh instances with material and different transforms
+     */
+    inline void Draw(const ::Material& material, std::span<::Matrix> transforms) const {
+        ::DrawMeshInstanced(*this, material, transforms.data(), transforms.size());
+    }
+
+    /**
      * Export mesh data to file
      *
      * @throws raylib::RaylibException Throws if failed to export the Mesh.

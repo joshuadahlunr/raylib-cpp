@@ -110,6 +110,13 @@ class Material : public ::Material {
     }
 
     /**
+     * Draw multiple mesh instances with material and different transforms
+     */
+    inline void DrawMesh(const ::Mesh& mesh, std::span<::Matrix> transforms) const {
+        ::DrawMeshInstanced(mesh, *this, transforms.data(), transforms.size());
+    }
+
+    /**
      * Check if material is ready
      */
     inline bool IsReady() {

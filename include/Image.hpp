@@ -63,6 +63,17 @@ class Image : public ::Image {
     }
 
     /**
+     * Load an animation image from the given file.
+     *
+     * @throws raylib::RaylibException Thrown if the image failed to load from the file.
+     *
+     * @see LoadAnim()
+     */
+    Image(const std::string_view fileName, std::span<int> frames) {
+        Load(fileName, frames.data());
+    }
+
+    /**
      * Load an image from the given file.
      *
      * @throws raylib::RaylibException Thrown if the image failed to load from the file.
@@ -249,6 +260,20 @@ class Image : public ::Image {
      */
     void Load(const std::string_view fileName, int* frames) {
         set(::LoadImageAnim(fileName.data(), frames));
+        if (!IsReady()) {
+            throw RaylibException("Failed to load Image from file: " + std::string(fileName));
+        }
+    }
+
+    /**
+     * Load image sequence from file (frames appended to image.data).
+     *
+     * @throws raylib::RaylibException Thrown if the image animation to load from the file.
+     *
+     * @see ::LoadImageAnim()
+     */
+    void Load(const std::string_view fileName, std::span<int> frames) {
+        set(::LoadImageAnim(fileName.data(), frames.data()));
         if (!IsReady()) {
             throw RaylibException("Failed to load Image from file: " + std::string(fileName));
         }

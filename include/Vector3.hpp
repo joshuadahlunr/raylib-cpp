@@ -262,6 +262,30 @@ class Vector3 : public ::Vector3 {
     static inline Vector3 One() {
         return Vector3One();
     }
+
+    static inline Vector3 Left() {
+        return {1, 0, 0};
+    }
+
+    static inline Vector3 Right() {
+        return {-1, 0, 0};
+    }
+
+    static inline Vector3 Up() {
+        return {0, 1, 0};
+    }
+
+    static inline Vector3 Down() {
+        return {0, -1, 0};
+    }
+
+    static inline Vector3 Forward() {
+        return {0, 0, 1};
+    }
+
+    static inline Vector3 Back() {
+        return {0, 0, -1};
+    }
 #endif
 
     inline void DrawLine3D(const ::Vector3& endPos, ::Color color) const {

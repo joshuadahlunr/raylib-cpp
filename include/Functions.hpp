@@ -216,6 +216,13 @@ RLCPPAPI inline ::Image LoadImageAnim(const std::string_view fileName, int *fram
 }
 
 /**
+ * Load animated image data
+ */
+RLCPPAPI inline ::Image LoadImageAnim(const std::string_view fileName, std::span<int> frames) {
+    return ::LoadImageAnim(fileName.data(), frames.data());
+}
+
+/**
  * Load image from memory buffer, fileType refers to extension like "png"
  */
 RLCPPAPI inline ::Image LoadImageFromMemory(const std::string_view fileType,
@@ -273,6 +280,13 @@ RLCPPAPI inline ::Font LoadFont(const std::string_view fileName) {
  */
 RLCPPAPI inline ::Font LoadFontEx(const std::string_view fileName, int fontSize, int *fontChars, int charsCount) {
     return ::LoadFontEx(fileName.data(), fontSize, fontChars, charsCount);
+}
+
+/**
+ * Load font from file (filename must include file extension)
+ */
+RLCPPAPI inline ::Font LoadFontEx(const std::string_view fileName, int fontSize, std::span<int> fontChars) {
+    return ::LoadFontEx(fileName.data(), fontSize, fontChars.data(), fontChars.size());
 }
 
 /**
