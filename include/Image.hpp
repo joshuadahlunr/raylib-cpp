@@ -99,7 +99,7 @@ class Image : public ::Image {
         set(::ImageText(text.data(), fontSize, color));
     }
 
-    Image(const ::Font& font, const std::string_view text, float fontSize, float spacing,
+    Image(const ::RLFont& font, const std::string_view text, float fontSize, float spacing,
             ::Color tint = {255, 255, 255, 255}) {
         set(::ImageTextEx(font, text.data(), fontSize, spacing, tint));
     }
@@ -123,7 +123,7 @@ class Image : public ::Image {
         return ::ImageText(text.data(), fontSize, color);
     }
 
-    static ::Image Text(const ::Font& font, const std::string_view text, float fontSize, float spacing,
+    static ::Image Text(const ::RLFont& font, const std::string_view text, float fontSize, float spacing,
             ::Color tint = {255, 255, 255, 255}) {
         return ::ImageTextEx(font, text.data(), fontSize, spacing, tint);
     }
@@ -678,7 +678,7 @@ class Image : public ::Image {
         ::ImageDrawText(this, text.data(), x, y, fontSize, color);
     }
 
-    inline void DrawText(const ::Font& font, const std::string_view text, ::Vector2 position,
+    inline void DrawText(const ::RLFont& font, const std::string_view text, ::Vector2 position,
             float fontSize, float spacing, ::Color tint = {255, 255, 255, 255}) {
         ::ImageDrawTextEx(this, font, text.data(), position, fontSize, spacing, tint);
     }

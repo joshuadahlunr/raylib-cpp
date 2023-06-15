@@ -14,14 +14,14 @@ namespace raylib {
 /**
  * Font type, includes texture and charSet array data
  */
-class Font : public ::Font {
+class Font : public ::RLFont {
  public:
     Font(int baseSize,
             int glyphCount,
             int glyphPadding,
             ::Texture2D texture,
             ::Rectangle *recs = nullptr,
-            ::GlyphInfo *glyphs = nullptr) : ::Font{baseSize, glyphCount, glyphPadding, texture, recs, glyphs} {
+            ::GlyphInfo *glyphs = nullptr) : ::RLFont{baseSize, glyphCount, glyphPadding, texture, recs, glyphs} {
         // Nothing.
     }
 
@@ -32,7 +32,7 @@ class Font : public ::Font {
         set(::GetFontDefault());
     }
 
-    Font(const ::Font& font) {
+    Font(const ::RLFont& font) {
         set(font);
     }
 
@@ -148,7 +148,7 @@ class Font : public ::Font {
         texture = newTexture;
     }
 
-    Font& operator=(const ::Font& font) {
+    Font& operator=(const ::RLFont& font) {
         Unload();
         set(font);
         return *this;
@@ -336,7 +336,7 @@ class Font : public ::Font {
     }
 
  private:
-    void set(const ::Font& font) {
+    void set(const ::RLFont& font) {
         baseSize = font.baseSize;
         glyphCount = font.glyphCount;
         glyphPadding = font.glyphPadding;

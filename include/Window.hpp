@@ -2,6 +2,9 @@
 #define RAYLIB_CPP_INCLUDE_WINDOW_HPP_
 
 #include <string>
+#ifdef RAYLIB_SUPPORT_OIS
+#   include <OISInputManager.h>
+#endif
 
 #include "./raylib.hpp"
 #include "./RaylibException.hpp"
@@ -394,6 +397,16 @@ class Window {
     inline double GetTime() const {
         return ::GetTime();
     }
+
+#ifdef RAYLIB_SUPPORT_OIS
+    /**
+     * Returns the manager inputs can be created from
+    */
+    OIS::InputManager* CreateInputManager() const {
+        void* handle = GetWindowHandle();
+        return OIS::InputManager::createInputSystem(*(size_t*)&handle);
+    }
+#endif
 
     /**
      * Check if window has been initialized successfully

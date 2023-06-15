@@ -31,7 +31,7 @@ class Text {
     /**
      * The internal raylib font to use for the text.
      */
-    ::Font font;
+    ::RLFont font;
 
     /**
      * The character spacing for the text.
@@ -51,7 +51,7 @@ class Text {
             const std::string_view text = "",
             float fontSize = 10,
             const ::Color& color = WHITE,
-            const ::Font& font = ::GetFontDefault(),
+            const ::RLFont& font = ::GetFontDefault(),
             float spacing = 0) :
             text(text),
             fontSize(fontSize),
@@ -71,7 +71,7 @@ class Text {
      * @param color The color of the font.
      */
     Text(
-            const ::Font& font,
+            const ::RLFont& font,
             const std::string_view text = "",
             float fontSize = 10,
             float spacing = 0,
@@ -86,7 +86,7 @@ class Text {
 
     GETTERSETTER(std::string, Text, text)
     GETTERSETTER(float, FontSize, fontSize)
-    GETTERSETTER(::Font, Font, font)
+    GETTERSETTER(::RLFont, Font, font)
     GETTERSETTER(::Color, Color, color)
     GETTERSETTER(float, Spacing, spacing)
 
@@ -179,7 +179,7 @@ class Text {
      * @see ::DrawTextEx
      */
     static inline void Draw(
-            const ::Font& font,
+            const ::RLFont& font,
             const std::string_view text,
             const ::Vector2& position,
             const float fontSize,
@@ -194,7 +194,7 @@ class Text {
      * @see ::DrawTextPro
      */
     static inline void Draw(
-            const ::Font& font,
+            const ::RLFont& font,
             const std::string_view text,
             const ::Vector2& position,
             const ::Vector2& origin,

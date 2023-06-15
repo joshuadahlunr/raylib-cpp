@@ -157,13 +157,13 @@ class Color : public ::Color {
         ::DrawText(text.data(), posX, posY, fontSize, *this);
     }
 
-    inline void DrawText(const ::Font& font, const std::string_view text, ::Vector2 position,
+    inline void DrawText(const ::RLFont& font, const std::string_view text, ::Vector2 position,
             float fontSize, float spacing) const {
         ::DrawTextEx(font, text.data(), position, fontSize, spacing, *this);
     }
 
     inline void DrawText(
-            const ::Font& font,
+            const ::RLFont& font,
             const std::string_view text,
             ::Vector2 position,
             ::Vector2 origin,

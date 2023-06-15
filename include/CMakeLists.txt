@@ -11,6 +11,7 @@ install(FILES
     Camera2D.hpp
     Camera3D.hpp
     Color.hpp
+    Degree.hpp
     Font.hpp
     Functions.hpp
     Gamepad.hpp

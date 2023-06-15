@@ -271,21 +271,21 @@ RLCPPAPI inline void DrawTextPro(const Font& font, const std::string_view text, 
 /**
  * Load font from file (filename must include file extension)
  */
-RLCPPAPI inline ::Font LoadFont(const std::string_view fileName) {
+RLCPPAPI inline ::RLFont LoadFont(const std::string_view fileName) {
     return ::LoadFont(fileName.data());
 }
 
 /**
  * Load font from file (filename must include file extension)
  */
-RLCPPAPI inline ::Font LoadFontEx(const std::string_view fileName, int fontSize, int *fontChars, int charsCount) {
+RLCPPAPI inline ::RLFont LoadFontEx(const std::string_view fileName, int fontSize, int *fontChars, int charsCount) {
     return ::LoadFontEx(fileName.data(), fontSize, fontChars, charsCount);
 }
 
 /**
  * Load font from file (filename must include file extension)
  */
-RLCPPAPI inline ::Font LoadFontEx(const std::string_view fileName, int fontSize, std::span<int> fontChars) {
+RLCPPAPI inline ::RLFont LoadFontEx(const std::string_view fileName, int fontSize, std::span<int> fontChars) {
     return ::LoadFontEx(fileName.data(), fontSize, fontChars.data(), fontChars.size());
 }
 
