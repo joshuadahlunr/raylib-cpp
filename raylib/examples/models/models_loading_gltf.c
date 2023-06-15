@@ -34,11 +34,11 @@ int main(void)
 
     // Define the camera to look into our 3d world
     Camera camera = { 0 };
-    camera.position = (Vector3){ 5.0f, 5.0f, 5.0f }; // Camera position
+    camera.position = (Vector3){ 5.0f, 5.0f, 5.0f };    // Camera position
     camera.target = (Vector3){ 0.0f, 2.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
+    camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
 
     // Load gltf model
     Model model = LoadModel("resources/models/gltf/robot.glb");
@@ -51,16 +51,17 @@ int main(void)
 
     Vector3 position = { 0.0f, 0.0f, 0.0f };    // Set model position
 
-    SetCameraMode(camera, CAMERA_FREE);     // Set free camera mode
+    DisableCursor();                    // Limit cursor to relative movement inside the window
 
-    SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!WindowShouldClose())            // Detect window close button or ESC key
+    while (!WindowShouldClose())        // Detect window close button or ESC key
     {
         // Update
         //----------------------------------------------------------------------------------
+        UpdateCamera(&camera, CAMERA_THIRD_PERSON);
         // Select current animation
         if (IsKeyPressed(KEY_UP)) animIndex = (animIndex + 1)%animsCount;
         else if (IsKeyPressed(KEY_DOWN)) animIndex = (animIndex + animsCount - 1)%animsCount;
@@ -69,9 +70,6 @@ int main(void)
         ModelAnimation anim = modelAnimations[animIndex];
         animCurrentFrame = (animCurrentFrame + 1)%anim.frameCount;
         UpdateModelAnimation(model, anim, animCurrentFrame);
-        
-        // Update camera
-        UpdateCamera(&camera);
         //----------------------------------------------------------------------------------
 
         // Draw

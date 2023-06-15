@@ -54,7 +54,7 @@
 // Defines and Macros
 //----------------------------------------------------------------------------------
 #ifndef MAX_TRACELOG_MSG_LENGTH
-    #define MAX_TRACELOG_MSG_LENGTH     128     // Max length of one trace-log message
+    #define MAX_TRACELOG_MSG_LENGTH     256         // Max length of one trace-log message
 #endif
 
 //----------------------------------------------------------------------------------
@@ -63,10 +63,10 @@
 static int logTypeLevel = LOG_INFO;                 // Minimum log type level
 
 static TraceLogCallback traceLog = NULL;            // TraceLog callback function pointer
-static LoadFileDataCallback loadFileData = NULL;    // LoadFileData callback funtion pointer
-static SaveFileDataCallback saveFileData = NULL;    // SaveFileText callback funtion pointer
-static LoadFileTextCallback loadFileText = NULL;    // LoadFileText callback funtion pointer
-static SaveFileTextCallback saveFileText = NULL;    // SaveFileText callback funtion pointer
+static LoadFileDataCallback loadFileData = NULL;    // LoadFileData callback function pointer
+static SaveFileDataCallback saveFileData = NULL;    // SaveFileText callback function pointer
+static LoadFileTextCallback loadFileText = NULL;    // LoadFileText callback function pointer
+static SaveFileTextCallback saveFileText = NULL;    // SaveFileText callback function pointer
 
 //----------------------------------------------------------------------------------
 // Functions to set internal callbacks
@@ -145,7 +145,8 @@ void TraceLog(int logType, const char *text, ...)
         default: break;
     }
 
-    strcat(buffer, text);
+    unsigned int textSize = strlen(text);
+    memcpy(buffer + strlen(buffer), text, (textSize < (MAX_TRACELOG_MSG_LENGTH - 12))? textSize : (MAX_TRACELOG_MSG_LENGTH - 12));
     strcat(buffer, "\n");
     vprintf(buffer, args);
     fflush(stdout);

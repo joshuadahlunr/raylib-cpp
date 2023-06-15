@@ -68,8 +68,6 @@ int main(void)
 
     int currentModel = 0;
 
-    SetCameraMode(camera, CAMERA_ORBITAL);  // Set a orbital camera mode
-
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
@@ -78,7 +76,7 @@ int main(void)
     {
         // Update
         //----------------------------------------------------------------------------------
-        UpdateCamera(&camera);
+        UpdateCamera(&camera, CAMERA_ORBITAL);
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
