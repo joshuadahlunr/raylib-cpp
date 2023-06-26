@@ -493,6 +493,8 @@ class Matrix : public ::Matrix {
         m15 = mat.m15;
     }
 };
+
+using Transform = Matrix; // raylib::Transform is also a matrix
 }  // namespace raylib
 
 using RMatrix = raylib::Matrix;
