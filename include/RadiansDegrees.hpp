@@ -18,10 +18,24 @@ namespace raylib {
     class Radian {
         float value;
     public:
-        Radian(float radian) : value(radian) {}
+        Radian(const float radian) : value(radian) {}
+        Radian(const Radian& other) : Radian(other.value) {}
+        Radian() : Radian(0) {}
         Radian(const Degree d); 
 
+        Radian& operator=(const Radian& other) = default;
+
         operator float() const { return value; }
+
+        Radian operator+(const Radian other) const { return value + other.value; }
+        Radian operator-(const Radian other) const { return value - other.value; }
+        Radian operator*(const Radian other) const { return value * other.value; }
+        Radian operator/(const Radian other) const { return value / other.value; }
+
+        Radian& operator+=(const Radian other) { *this = *this + other; return *this; }
+        Radian& operator-=(const Radian other) { *this = *this - other; return *this; }
+        Radian& operator*=(const Radian other) { *this = *this * other; return *this; }
+        Radian& operator/=(const Radian other) { *this = *this / other; return *this; }
     };
 
     /**
@@ -31,9 +45,23 @@ namespace raylib {
         float value;
     public:
         Degree(float degree) : value(degree) {}
+        Degree(const Degree& other) : Degree(other.value) {}
+        Degree() : Degree(0) {}
         Degree(const Radian r) : Degree(float(r) * RAD2DEG) {}
 
+        Degree& operator=(const Degree& other) = default;
+
         operator float() const { return value; }
+
+        Degree operator+(const Degree other) const { return value + other.value; }
+        Degree operator-(const Degree other) const { return value - other.value; }
+        Degree operator*(const Degree other) const { return value * other.value; }
+        Degree operator/(const Degree other) const { return value / other.value; }
+
+        Degree& operator+=(const Degree other) { *this = *this + other; return *this; }
+        Degree& operator-=(const Degree other) { *this = *this - other; return *this; }
+        Degree& operator*=(const Degree other) { *this = *this * other; return *this; }
+        Degree& operator/=(const Degree other) { *this = *this / other; return *this; }
 
         float RadianValue() { return Radian(*this); }
     };
