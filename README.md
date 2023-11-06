@@ -253,6 +253,25 @@ raylib::Vector2 direction(50, 50);
 raylib::Vector2 newDirection = direction.Rotate(30);
 ```
 
+Additionally provides raylib::Radian and raylib::Degree for easier math!
+
+### Buffered Input
+
+The [BufferedRaylib](https://github.com/joshuadahlunr/BufferedRaylib) methods are included
+
+```cpp
+// The buffered input manages all of the actions
+raylib::BufferedInput input;
+
+// Create a movement action which creates a vector pointing in a direction based on which combination of the wasd key are pressed
+input.actions["move"] = raylib::Action::wasd()
+    .set_callback([&ballPosition](const std::string_view name, raylib::Vector2 dir, raylib::Vector2 delta) {
+        // Whenever the set of pressed keys changes, move the ball based on the pressed set
+        ballPosition = dir.Normalize().Scale(-10) + ballPosition;
+        std::cout << "{" << dir.x << ", " << dir.y << "} - {" << delta.x << ", " << delta.y << "}" << std::endl;
+    }).move();
+```
+
 ## Getting Started
 
 *raylib-cpp* is a header-only library. This means in order to use it, you must link your project to [raylib](https://www.raylib.com/), and then include [`raylib-cpp.hpp`](raylib-cpp/include/raylib-cpp.hpp).

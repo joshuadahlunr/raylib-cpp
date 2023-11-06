@@ -65,26 +65,4 @@
 #include "./Wave.hpp"
 #include "./Window.hpp"
 
-/**
- * All Object Oriented Input System classes appear in the OIS namespace
- */
-namespace OIS {
-    // Nothing.
-}  // namespace raylib
-
-/**
- * All raylib-cpp classes and functions appear in the raylib namespace.
- */
-namespace raylib {
-    // Nothing.
-
-    /**
-     * Proxy reference to the OIS namespace
-    */
-    inline namespace input {
-        using namespace OIS;
-    }
-}  // namespace raylib
-
-
 #endif  // RAYLIB_CPP_INCLUDE_RAYLIB_CPP_HPP_

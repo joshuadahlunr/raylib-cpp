@@ -2,9 +2,6 @@
 #define RAYLIB_CPP_INCLUDE_WINDOW_HPP_
 
 #include <string>
-#ifdef RAYLIB_SUPPORT_OIS
-#   include <OISInputManager.h>
-#endif
 
 #include "./raylib.hpp"
 #include "./RaylibException.hpp"
@@ -397,32 +394,6 @@ class Window {
     inline double GetTime() const {
         return ::GetTime();
     }
-
-#ifdef RAYLIB_SUPPORT_OIS
-    /**
-     * Returns the manager inputs can be created from
-    */
-    OIS::InputManager* CreateInputManager() const {
-        OIS::ParamList pl;
-        auto handle = GetWindowHandle();
-        pl.insert(std::make_pair(std::string("WINDOW"), std::to_string(*(size_t*)&handle)));
-
-        // Allow the use of the keyboard after the input manager has been created!
-    #if defined OIS_WIN32_PLATFORM
-        pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_FOREGROUND" )));
-        pl.insert(std::make_pair(std::string("w32_mouse"), std::string("DISCL_NONEXCLUSIVE")));
-        pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_FOREGROUND")));
-        pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
-    #elif defined OIS_LINUX_PLATFORM
-        pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-        pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
-        // pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
-        pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
-    #endif
-
-        return OIS::InputManager::createInputSystem(pl);
-    }
-#endif
 
     /**
      * Check if window has been initialized successfully
