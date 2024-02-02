@@ -24,16 +24,14 @@
 
 10) Install the C/C++ Extension Pack (four boxes with one offset on the left navigation bar, search for C++, it should be near the top)
 
-11) Create a new folder called `src` and a new `helloworld.cpp` file in that folder.
+11) Create a new `helloworld.cpp` file in the `as0` folder.
 
 12) Write hello world in helloworld.cpp
 
-13) Download `CMakeLists.txt` off of canvas and move it into your as0 folder: https://webcampus.unr.edu/files/13113431/download?download_frd=1
+13) Download `CMakeLists.txt` off of the demo and move it into your as0 folder: https://github.com/joshuadahlunr/CS381Demo/blob/master/AS0/CMakeLists.txt
 
-14) You may need to replace the line `add_subdirectory(raylib)` with `add_subdirectory(raylib-cpp)`
+14) Create a new folder in as0 called `build` (`mkdir build`)
 
-15) Create a new folder in as0 called `build` (`mkdir build`)
+15) Inside build (`cd build`) run `cmake .. && make` to compile your libraries
 
-16) Inside build (`cd build`) run `cmake .. && make` to compile your libraries
-
-17) If everything built with no errors you should be able to run `./as0` and see the results of your hello world application printed to the screen.
+16) If everything built with no errors you should be able to run `./as0` and see the results of your hello world application printed to the screen.
