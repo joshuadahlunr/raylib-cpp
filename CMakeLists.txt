@@ -15,6 +15,8 @@ else()
 endif()
 option(BUILD_RAYLIB_CPP_EXAMPLES "Examples" ${RAYLIB_CPP_IS_MAIN})
 
+set(CMAKE_CXX_STANDARD 20)
+
 # Include Directory
 add_subdirectory(include)
 
