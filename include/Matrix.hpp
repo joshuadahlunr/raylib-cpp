@@ -5,6 +5,7 @@
 #include "./raylib.hpp"
 #include "./raymath.hpp"
 #include "./RadiansDegrees.hpp"
+#include "include/Vector4.hpp"
 
 #ifndef RAYLIB_CPP_NO_MATH
 #include <cmath>
@@ -252,6 +253,36 @@ class Matrix : public ::Matrix {
     */
     inline Matrix Rotate(Vector3 axis, Radian angle) const {
         return Rotate(LocalSpace, axis, angle);
+    }
+
+    /**
+     * Creates a rotation matrix around the given quaternion
+    */
+    static Matrix CreateRotate(Quaternion quat) {
+        auto [axis, angle] = quat.ToAxisAngle();
+        return CreateRotate(axis, angle);
+    }
+
+    /**
+     * Rotates the current matrix in global space around the given quaternion
+    */
+    Matrix Rotate(GlobalSpace_t, Quaternion quat) const {
+        return (*this) * CreateRotate(quat);
+    }
+
+    /**
+     * Rotates the current matrix in local space around the given quaternion
+    */
+    Matrix Rotate(LocalSpace_t, Quaternion quat) const {
+        auto toOrigin = TranslateToOrigin();
+        return (*this) * toOrigin * CreateRotate(quat) * toOrigin.Invert();
+    }
+
+    /**
+     * Rotates the current matrix in local space around the given quaternion
+    */
+    inline Matrix Rotate(Quaternion quat) const {
+        return Rotate(LocalSpace, quat);
     }
 
     /**
