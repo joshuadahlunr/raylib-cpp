@@ -70,11 +70,4 @@
 #include "./Wave.hpp"
 #include "./Window.hpp"
 
-/**
- * All raylib-cpp classes and functions appear in the raylib namespace.
- */
-namespace raylib {
-    // Nothing.
-}  // namespace raylib
-
 #endif  // RAYLIB_CPP_INCLUDE_RAYLIB_CPP_HPP_

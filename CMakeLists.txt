@@ -23,6 +23,7 @@ add_subdirectory(include)
 # Add raylib and raygui as submodules
 add_subdirectory(raylib)
 add_subdirectory(raygui/projects/CMake)
+add_subdirectory(BufferedRaylib)
 
 # Examples
 if(BUILD_RAYLIB_CPP_EXAMPLES)
