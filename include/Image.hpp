@@ -1,6 +1,7 @@
 #ifndef RAYLIB_CPP_INCLUDE_IMAGE_HPP_
 #define RAYLIB_CPP_INCLUDE_IMAGE_HPP_
 
+#include <span>
 #include <string>
 #include <string_view>
 
@@ -60,6 +61,17 @@ class Image : public ::Image {
      */
     Image(const std::string_view fileName, int* frames) {
         Load(fileName, frames);
+    }
+
+    /**
+     * Load an animation image from the given file.
+     *
+     * @throws raylib::RaylibException Thrown if the image failed to load from the file.
+     *
+     * @see LoadAnim()
+     */
+    Image(const std::string_view fileName, std::span<int> frames) {
+        Load(fileName, frames.data());
     }
 
     /**
@@ -248,6 +260,20 @@ class Image : public ::Image {
     }
 
     /**
+     * Load image sequence from file (frames appended to image.data).
+     *
+     * @throws raylib::RaylibException Thrown if the image animation to load from the file.
+     *
+     * @see ::LoadImageAnim()
+     */
+    void Load(const std::string_view fileName, std::span<int> frames) {
+        set(::LoadImageAnim(fileName.data(), frames.data()));
+        if (!IsReady()) {
+            throw RaylibException("Failed to load Image from file: " + std::string(fileName));
+        }
+    }
+
+    /**
      * Load image from memory buffer, fileType refers to extension: i.e. "png".
      *
      * @throws raylib::RaylibException Thrown if the image animation to load from the file.
@@ -259,6 +285,22 @@ class Image : public ::Image {
             const unsigned char *fileData,
             int dataSize) {
         set(::LoadImageFromMemory(fileType.data(), fileData, dataSize));
+        if (!IsReady()) {
+            throw RaylibException("Failed to load Image data with file type: " + std::string(fileType));
+        }
+    }
+
+    /**
+     * Load image from memory buffer, fileType refers to extension: i.e. "png".
+     *
+     * @throws raylib::RaylibException Thrown if the image animation to load from the file.
+     *
+     * @see ::LoadImageFromMemory()
+     */
+    void Load(
+            const std::string_view fileType,
+            const std::span<unsigned char> fileData) {
+        set(::LoadImageFromMemory(fileType.data(), fileData.data(), static_cast<int>(fileData.size())));
         if (!IsReady()) {
             throw RaylibException("Failed to load Image data with file type: " + std::string(fileType));
         }
@@ -304,6 +346,10 @@ class Image : public ::Image {
      */
     unsigned char* ExportToMemory(const char *fileType, int *fileSize) {
         return ::ExportImageToMemory(*this, fileType, fileSize);
+    }
+
+    unsigned char* ExportToMemory(const std::string_view fileType, std::span<int> fileSize) {
+        return ::ExportImageToMemory(*this, fileType.data(), fileSize.data());
     }
 
     /**
@@ -505,9 +551,11 @@ class Image : public ::Image {
 
     /**
      * Rotate image by input angle in degrees (-359 to 359)
+     *
+     * @note Only works with integer values, float values will be truncated!
      */
     Image& Rotate(Degree degrees) {
-        ::ImageRotate(this, degrees);
+        ::ImageRotate(this, static_cast<int>(degrees));
         return *this;
     }
 

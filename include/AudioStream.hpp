@@ -4,6 +4,7 @@
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./RaylibException.hpp"
+#include <span>
 
 namespace raylib {
 /**
@@ -83,6 +84,14 @@ class AudioStream : public ::AudioStream {
      */
     AudioStream& Update(const void *data, int samplesCount) {
         ::UpdateAudioStream(*this, data, samplesCount);
+        return *this;
+    }
+
+    /**
+     * Update audio stream buffers with data
+     */
+    AudioStream& Update(std::span<std::byte> data) {
+        ::UpdateAudioStream(*this, data.data(), static_cast<int>(data.size()));
         return *this;
     }
 

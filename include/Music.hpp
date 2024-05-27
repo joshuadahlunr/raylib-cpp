@@ -1,6 +1,7 @@
 #ifndef RAYLIB_CPP_INCLUDE_MUSIC_HPP_
 #define RAYLIB_CPP_INCLUDE_MUSIC_HPP_
 
+#include <span>
 #include <string>
 #include <string_view>
 
@@ -40,6 +41,15 @@ class Music : public ::Music {
      */
     Music(const std::string_view fileType, unsigned char* data, int dataSize) {
         Load(fileType, data, dataSize);
+    }
+
+    /**
+     * Load music stream from memory
+     *
+     * @throws raylib::RaylibException Throws if the music failed to load.
+     */
+    Music(const std::string_view fileType, std::span<unsigned char> data) {
+        Load(fileType, data);
     }
 
     Music(const Music&) = delete;
@@ -210,6 +220,18 @@ class Music : public ::Music {
      */
     void Load(const std::string_view fileType, unsigned char* data, int dataSize) {
         set(::LoadMusicStreamFromMemory(fileType.data(), data, dataSize));
+        if (!IsReady()) {
+            throw RaylibException(TextFormat("Failed to load Music from %s file dat", fileType.data()));
+        }
+    }
+
+    /**
+     * Load music stream from memory
+     *
+     * @throws raylib::RaylibException Throws if the music failed to load.
+     */
+    void Load(const std::string_view fileType, std::span<unsigned char> data) {
+        set(::LoadMusicStreamFromMemory(fileType.data(), data.data(), static_cast<int>(data.size())));
         if (!IsReady()) {
             throw RaylibException(TextFormat("Failed to load Music from %s file dat", fileType.data()));
         }
