@@ -5,6 +5,7 @@
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
+#include "./Vector3.hpp"
 #include "./RaylibException.hpp"
 #include "./RadiansDegrees.hpp"
 
@@ -193,10 +194,16 @@ class Model : public ::Model {
     }
 
     /**
+     * Compute model bounding box limits with respect to the Model's transformation (considers all meshes)
+     * This function is pretty expensive!
+     */
+    BoundingBox GetTransformedBoundingBox() const;
+
+    /**
      * Compute model bounding box limits (considers all meshes)
      */
     operator BoundingBox() const {
-        return ::GetModelBoundingBox(*this);
+        return GetBoundingBox();
     }
 
     /**
