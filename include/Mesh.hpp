@@ -7,8 +7,9 @@
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./BoundingBox.hpp"
-#include "./Model.hpp"
 #include "./MeshUnmanaged.hpp"
+#include "./Vector3.hpp"
+// #include "./Model.hpp"
 
 namespace raylib {
 /**
