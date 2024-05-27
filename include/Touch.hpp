@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_TOUCH_HPP_
 
 #include "./raylib.hpp"
+#include "./Vector2.hpp"
 
 namespace raylib {
 /**

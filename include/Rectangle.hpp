@@ -4,6 +4,7 @@
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./Vector2.hpp"
+#include "./Vector4.hpp"
 #include "./RadiansDegrees.hpp"
 
 namespace raylib {
@@ -35,11 +36,11 @@ class Rectangle : public ::Rectangle {
         return *this;
     }
 
-    ::Vector4 ToVector4() {
+    Vector4 ToVector4() {
         return {x, y, width, height};
     }
 
-    operator ::Vector4() const {
+    operator Vector4() const {
         return {x, y, width, height};
     }
 
@@ -108,7 +109,7 @@ class Rectangle : public ::Rectangle {
     /**
      * Get collision rectangle for two rectangles collision
      */
-    ::Rectangle GetCollision(::Rectangle rec2) const {
+    Rectangle GetCollision(::Rectangle rec2) const {
         return ::GetCollisionRec(*this, rec2);
     }
 
