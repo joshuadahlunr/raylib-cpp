@@ -3,6 +3,7 @@
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
+#include "./RayCollision.hpp"
 
 namespace raylib {
 /**
