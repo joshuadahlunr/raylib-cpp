@@ -20,6 +20,7 @@ class Shader : public ::Shader {
     }
 
     Shader(unsigned int id, int* locs = nullptr) : ::Shader{id, locs} {}
+    Shader(unsigned int id, std::span<int> locs) : ::Shader{id, locs.data()} {}
 
     Shader(const std::string_view vsFileName, const std::string_view fsFileName) {
         set(::LoadShader(vsFileName.data(), fsFileName.data()));
