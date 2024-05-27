@@ -2,7 +2,10 @@
 #define RAYLIB_CPP_INCLUDE_CAMERA3D_HPP_
 
 #include "./raylib.hpp"
+#include "./Vector2.hpp"
 #include "./Vector3.hpp"
+#include "./Matrix.hpp"
+#include "./Ray.hpp"
 #include "./raylib-cpp-utils.hpp"
 
 namespace raylib {
