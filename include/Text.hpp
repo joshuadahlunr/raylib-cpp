@@ -8,6 +8,7 @@
 #include "./RaylibException.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./RadiansDegrees.hpp"
+#include "./Vector2.hpp"
 
 namespace raylib {
 /**

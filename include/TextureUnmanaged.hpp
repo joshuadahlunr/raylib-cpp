@@ -96,7 +96,7 @@ class TextureUnmanaged : public ::Texture {
     /**
      * Retrieve the width and height of the texture.
      */
-    ::Vector2 GetSize() const {
+    Vector2 GetSize() const {
         return {static_cast<float>(width), static_cast<float>(height)};
     }
 
@@ -160,7 +160,7 @@ class TextureUnmanaged : public ::Texture {
     /**
      * Get pixel data from GPU texture and return an Image
      */
-    ::Image GetData() const {
+    Image GetData() const {
         return ::LoadImageFromTexture(*this);
     }
 

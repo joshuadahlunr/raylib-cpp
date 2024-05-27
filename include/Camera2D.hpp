@@ -3,6 +3,7 @@
 
 #include "./raylib.hpp"
 #include "./Vector2.hpp"
+#include "./Matrix.hpp"
 #include "./RadiansDegrees.hpp"
 #include "./raylib-cpp-utils.hpp"
 
