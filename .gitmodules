@@ -7,3 +7,6 @@
 	path = raylib
 	url = https://github.com/raysan5/raylib.git
 	shallow = true
+[submodule "raygui"]
+	path = raygui
+	url = https://github.com/joshuadahlunr/raygui.git
