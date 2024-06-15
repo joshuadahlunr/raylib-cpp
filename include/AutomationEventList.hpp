@@ -4,6 +4,8 @@
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./RaylibException.hpp"
+#include <span>
+#include <string_view>
 
 namespace raylib {
 /**
@@ -29,6 +31,9 @@ class AutomationEventList : public ::AutomationEventList {
      */
     AutomationEventList(const char* fileName) {
         Load(fileName);
+    }
+    AutomationEventList(const std::string_view fileName) {
+        Load(fileName.data());
     }
 
     AutomationEventList(const AutomationEventList&) = delete;
@@ -85,6 +90,19 @@ class AutomationEventList : public ::AutomationEventList {
     }
 
     /**
+     * Load audio stream (to stream raw audio pcm data)
+     *
+     * @throws raylib::RaylibException Throws if the AutomationEventList failed to load.
+     */
+    void Load(const std::string_view fileName) {
+        Unload();
+        set(::LoadAutomationEventList(fileName.data()));
+        if (!IsReady()) {
+            throw RaylibException("Failed to load automation event list");
+        }
+    }
+
+    /**
      * Update audio stream buffers with data
      */
     void Unload() {
@@ -110,6 +128,10 @@ class AutomationEventList : public ::AutomationEventList {
 
     bool Export(const char* fileName) {
         return ::ExportAutomationEventList(*this, fileName);
+    }
+
+    bool Export(const std::string_view fileName) {
+        return ::ExportAutomationEventList(*this, fileName.data());
     }
 
     void Set() {

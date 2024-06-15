@@ -25,7 +25,7 @@ class FileText {
     }
     ~FileText() { Unload(); }
 
-    explicit FileText(const std::string& fileName) {
+    explicit FileText(const std::string_view fileName) {
         Load(fileName);
     }
 
@@ -39,7 +39,7 @@ class FileText {
         return data;
     }
 
-    void Load(const std::string& fileName) { Load(fileName.c_str()); }
+    void Load(const std::string_view fileName) { Load(fileName.data()); }
     void Load(const char* fileName) {
         data = ::LoadFileText(fileName);
         length = ::TextLength(data);
