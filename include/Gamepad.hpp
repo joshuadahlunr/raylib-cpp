@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_GAMEPAD_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
@@ -108,8 +109,8 @@ class Gamepad {
         return ::GetGamepadAxisMovement(number, axis);
     }
 
-    int SetMappings(const std::string& mappings) {
-        return SetGamepadMappings(mappings.c_str());
+    int SetMappings(const std::string_view mappings) {
+        return SetGamepadMappings(mappings.data());
     }
 
  protected:

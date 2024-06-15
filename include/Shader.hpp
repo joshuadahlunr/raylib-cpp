@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_SHADER_HPP_
 
 #include <string>
+#include <string_view>
 #include <span>
 
 #include "./raylib.hpp"
@@ -20,8 +21,8 @@ class Shader : public ::Shader {
 
     Shader(unsigned int id, int* locs = nullptr) : ::Shader{id, locs} {}
 
-    Shader(const std::string& vsFileName, const std::string& fsFileName) {
-        set(::LoadShader(vsFileName.c_str(), fsFileName.c_str()));
+    Shader(const std::string_view vsFileName, const std::string_view fsFileName) {
+        set(::LoadShader(vsFileName.data(), fsFileName.data()));
     }
 
     Shader(const char* vsFileName, const char* fsFileName) {
@@ -42,8 +43,8 @@ class Shader : public ::Shader {
      *
      * @see ::LoadShader
      */
-    static ::Shader Load(const std::string& vsFileName, const std::string& fsFileName) {
-        return ::LoadShader(vsFileName.c_str(), fsFileName.c_str());
+    static ::Shader Load(const std::string_view vsFileName, const std::string_view fsFileName) {
+        return ::LoadShader(vsFileName.data(), fsFileName.data());
     }
 
     static ::Shader Load(const char* vsFileName, const char* fsFileName) {
@@ -55,8 +56,8 @@ class Shader : public ::Shader {
      *
      * @see ::LoadShaderFromMemory
      */
-    static ::Shader LoadFromMemory(const std::string& vsCode, const std::string& fsCode) {
-        return ::LoadShaderFromMemory(vsCode.c_str(), fsCode.c_str());
+    static ::Shader LoadFromMemory(const std::string_view vsCode, const std::string_view fsCode) {
+        return ::LoadShaderFromMemory(vsCode.data(), fsCode.data());
     }
 
     static ::Shader LoadFromMemory(const char* vsCode, const char* fsCode) {
@@ -124,8 +125,8 @@ class Shader : public ::Shader {
      *
      * @see GetShaderLocation()
      */
-    int GetLocation(const std::string& uniformName) const {
-        return ::GetShaderLocation(*this, uniformName.c_str());
+    int GetLocation(const std::string_view uniformName) const {
+        return ::GetShaderLocation(*this, uniformName.data());
     }
 
     /**
@@ -133,8 +134,8 @@ class Shader : public ::Shader {
      *
      * @see GetShaderLocationAttrib()
      */
-    int GetLocationAttrib(const std::string& attribName) const {
-        return ::GetShaderLocationAttrib(*this, attribName.c_str());
+    int GetLocationAttrib(const std::string_view attribName) const {
+        return ::GetShaderLocationAttrib(*this, attribName.data());
     }
 
     /**
@@ -153,7 +154,7 @@ class Shader : public ::Shader {
      *
      * @see SetShaderValue()
      */
-    inline Shader& SetValue(std::string uniformName, const void* value, int uniformType) {
+    inline Shader& SetValue(std::string_view uniformName, const void* value, int uniformType) {
         ::SetShaderValue(*this, GetLocation(uniformName), value, uniformType);
         return *this;
     }
@@ -176,7 +177,7 @@ class Shader : public ::Shader {
      * @see SetShaderValue()
      */
     template<typename T>
-    inline Shader& SetValue(std::string uniformName, const T& value, int uniformType) {
+    inline Shader& SetValue(std::string_view uniformName, const T& value, int uniformType) {
         ::SetShaderValue(*this, GetLocation(uniformName), &value, uniformType);
         return *this;
     }
@@ -197,7 +198,7 @@ class Shader : public ::Shader {
      *
      * @see SetShaderValueV()
      */
-    inline Shader& SetValue(std::string uniformName, const void* value, int uniformType, int count) {
+    inline Shader& SetValue(std::string_view uniformName, const void* value, int uniformType, int count) {
         ::SetShaderValueV(*this, GetLocation(uniformName), value, uniformType, count);
         return *this;
     }
@@ -220,7 +221,7 @@ class Shader : public ::Shader {
      * @see SetShaderValueV()
      */
     template<typename T>
-    inline Shader& SetValue(std::string uniformName, std::span<T> data, int uniformType) {
+    inline Shader& SetValue(std::string_view uniformName, std::span<T> data, int uniformType) {
         ::SetShaderValueV(*this, GetLocation(uniformName), data.value(), uniformType, data.count());
         return *this;
     }
@@ -241,7 +242,7 @@ class Shader : public ::Shader {
      *
      * @see SetShaderValueMatrix()
      */
-    inline Shader& SetValue(std::string uniformName, const ::Matrix& mat) {
+    inline Shader& SetValue(std::string_view uniformName, const ::Matrix& mat) {
         ::SetShaderValueMatrix(*this, GetLocation(uniformName), mat);
         return *this;
     }
@@ -262,7 +263,7 @@ class Shader : public ::Shader {
      *
      * @see SetShaderValueTexture()
      */
-    inline Shader& SetValue(std::string uniformName, const ::Texture2D& texture) {
+    inline Shader& SetValue(std::string_view uniformName, const ::Texture2D& texture) {
         ::SetShaderValueTexture(*this, GetLocation(uniformName), texture);
         return *this;
     }
