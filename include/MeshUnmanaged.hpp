@@ -52,7 +52,7 @@ class MeshUnmanaged : public ::Mesh {
     /**
      * Load meshes from model file
      */
-    // static std::vector<Mesh> Load(const std::string& fileName) {
+    // static std::vector<Mesh> Load(std::string_view fileName) {
     //    int count = 0;
     //    ::Mesh* meshes = LoadMeshes(fileName.c_str(), &count);
     //    return std::vector<Mesh>(meshes, meshes + count);
@@ -199,8 +199,8 @@ class MeshUnmanaged : public ::Mesh {
      *
      * @throws raylib::RaylibException Throws if failed to export the Mesh.
      */
-    void Export(const std::string& fileName) {
-        if (!::ExportMesh(*this, fileName.c_str())) {
+    void Export(std::string_view fileName) {
+        if (!::ExportMesh(*this, fileName.data())) {
             throw RaylibException("Failed to export the Mesh");
         }
     }

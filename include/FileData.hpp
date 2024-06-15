@@ -25,14 +25,14 @@ class FileData {
     }
     ~FileData() { Unload(); }
 
-    explicit FileData(const std::string& fileName) {
+    explicit FileData(const std::string_view fileName) {
         Load(fileName);
     }
 
     GETTER(const unsigned char*, Data, data)
     GETTER(int, BytesRead, bytesRead)
 
-    void Load(const std::string& fileName) { Load(fileName.c_str()); }
+    void Load(const std::string_view fileName) { Load(fileName.data()); }
     void Load(const char* fileName) {
         data = ::LoadFileData(fileName, &bytesRead);
     }

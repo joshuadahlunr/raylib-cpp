@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_SOUND_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
@@ -42,7 +43,7 @@ class Sound : public ::Sound {
      *
      * @throws raylib::RaylibException Throws if the Sound failed to load.
      */
-    Sound(const std::string& fileName) {
+    Sound(const std::string_view fileName) {
         Load(fileName);
     }
 
@@ -170,8 +171,8 @@ class Sound : public ::Sound {
      *
      * @throws raylib::RaylibException Throws if the Sound failed to load.
      */
-    void Load(const std::string& fileName) {
-        set(::LoadSound(fileName.c_str()));
+    void Load(const std::string_view fileName) {
+        set(::LoadSound(fileName.data()));
         if (!IsReady()) {
             throw RaylibException("Failed to load Sound from file");
         }
