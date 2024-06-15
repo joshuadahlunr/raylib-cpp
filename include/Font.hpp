@@ -250,7 +250,7 @@ class Font : public ::Font {
             const char* text,
             ::Vector2 position,
             ::Vector2 origin,
-            float rotation,
+            Degree rotation,
             float fontSize,
             float spacing,
             ::Color tint = WHITE) const {
@@ -264,7 +264,7 @@ class Font : public ::Font {
             const std::string& text,
             ::Vector2 position,
             ::Vector2 origin,
-            float rotation,
+            Degree rotation,
             float fontSize,
             float spacing,
             ::Color tint = WHITE) const {

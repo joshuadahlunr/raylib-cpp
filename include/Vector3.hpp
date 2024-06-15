@@ -10,6 +10,7 @@
 #include "./raylib.hpp"
 #include "./raymath.hpp"
 #include "./raylib-cpp-utils.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 /**
@@ -300,7 +301,7 @@ class Vector3 : public ::Vector3 {
     void DrawCircle3D(
             float radius,
             const ::Vector3& rotationAxis,
-            float rotationAngle,
+            Radian rotationAngle,
             Color color) const {
         ::DrawCircle3D(*this, radius, rotationAxis, rotationAngle, color);
     }
