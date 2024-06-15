@@ -11,6 +11,7 @@
 #include "./raylib.hpp"
 #include "./raymath.hpp"
 #include "./raylib-cpp-utils.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 /**
@@ -108,16 +109,21 @@ class Vector4 : public ::Vector4 {
     void ToAxisAngle(::Vector3 *outAxis, float *outAngle) const {
         QuaternionToAxisAngle(*this, outAxis, outAngle);
     }
+    void ToAxisAngle(::Vector3 *outAxis, Radian *outAngle) const {
+        float tmp;
+        ToAxisAngle(outAxis, &tmp);
+        *outAngle = tmp;
+    }
 
     /**
      * Get the rotation angle and axis for a given quaternion
      */
-    std::pair<Vector3, float> ToAxisAngle() const {
+    std::pair<Vector3, Radian> ToAxisAngle() const {
         Vector3 outAxis;
         float outAngle;
         QuaternionToAxisAngle(*this, &outAxis, &outAngle);
 
-        return std::pair<Vector3, float>(outAxis, outAngle);
+        return std::pair<Vector3, Radian>(outAxis, outAngle);
     }
 
     Vector4 Transform(const ::Matrix& matrix) const {
@@ -136,11 +142,11 @@ class Vector4 : public ::Vector4 {
         return ::QuaternionFromMatrix(matrix);
     }
 
-    static Vector4 FromAxisAngle(const ::Vector3& axis, const float angle) {
+    static Vector4 FromAxisAngle(const ::Vector3& axis, const Radian angle) {
         return ::QuaternionFromAxisAngle(axis, angle);
     }
 
-    static Vector4 FromEuler(const float pitch, const float yaw, const float roll) {
+    static Vector4 FromEuler(const Degree pitch, const Degree yaw, const Degree roll) {
         return ::QuaternionFromEuler(pitch, yaw, roll);
     }
 
