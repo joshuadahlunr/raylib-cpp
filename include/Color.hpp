@@ -5,6 +5,7 @@
 
 #include "./raylib.hpp"
 #include "./Vector4.hpp"
+#include "./RadiansDegrees.hpp"
 #include "./raylib-cpp-utils.hpp"
 
 namespace raylib {
@@ -182,7 +183,7 @@ class Color : public ::Color {
             const char* text,
             ::Vector2 position,
             ::Vector2 origin,
-            float rotation,
+            Degree rotation,
             float fontSize,
             float spacing) const {
         ::DrawTextPro(font, text, position, origin, rotation, fontSize, spacing, *this);
@@ -193,7 +194,7 @@ class Color : public ::Color {
             const std::string& text,
             ::Vector2 position,
             ::Vector2 origin,
-            float rotation,
+            Degree rotation,
             float fontSize,
             float spacing) const {
         ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, *this);
@@ -211,7 +212,7 @@ class Color : public ::Color {
         ::DrawRectangleRec(rec, *this);
     }
 
-    void DrawRectangle(::Rectangle rec, ::Vector2 origin, float rotation) const {
+    void DrawRectangle(::Rectangle rec, ::Vector2 origin, Degree rotation) const {
         ::DrawRectanglePro(rec, origin, rotation, *this);
     }
 
