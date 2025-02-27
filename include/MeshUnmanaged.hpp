@@ -88,13 +88,13 @@ public:
             {
                 // [-width/2, width/2]
                 float xPos = ((float)x/(resX - 1) - 0.5f)*width;
-                vertices[x + z*resX] = (Vector3){ xPos, 0.0f, zPos };
+                vertices[x + z*resX] = Vector3{ xPos, 0.0f, zPos };
             }
         }
 
         // Normals definition
         Vector3 *normals = (Vector3 *)RL_MALLOC(vertexCount*sizeof(Vector3));
-        for (int n = 0; n < vertexCount; n++) normals[n] = (Vector3){ 0.0f, 1.0f, 0.0f };   // Vector3.up;
+        for (int n = 0; n < vertexCount; n++) normals[n] = Vector3{ 0.0f, 1.0f, 0.0f };   // Vector3.up;
 
         // TexCoords definition
         Vector2 *texcoords = (Vector2 *)RL_MALLOC(vertexCount*sizeof(Vector2));
@@ -102,7 +102,7 @@ public:
         {
             for (int u = 0; u < resX; u++)
             {
-                texcoords[u + v*resX] = (Vector2){ (float)u/(resX - 1), (float)v/(resZ - 1) };
+                texcoords[u + v*resX] = Vector2{ (float)u/(resX - 1), (float)v/(resZ - 1) };
             }
         }
 
