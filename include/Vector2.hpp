@@ -69,6 +69,29 @@ public:
     }
 
     /**
+     * Add vector and float value
+     */
+    Vector2 Add(float value) const {
+      return Vector2AddValue(*this, value);
+    }
+
+    /**
+     * Add vector and float value
+     */
+    Vector2 operator+(float value) const {
+      return Vector2AddValue(*this, value);
+    }
+
+    /**
+     * Add vector and float value
+     */
+    Vector2& operator+=(float value) {
+        set(Vector2AddValue(*this, value));
+
+        return *this;
+    }
+
+    /**
      * Subtract two vectors (v1 - v2)
      */
     [[nodiscard]] Vector2 Subtract(const ::Vector2& vector2) const { return Vector2Subtract(*this, vector2); }
@@ -83,6 +106,29 @@ public:
      */
     Vector2& operator-=(const ::Vector2& vector2) {
         set(Vector2Subtract(*this, vector2));
+
+        return *this;
+    }
+
+    /**
+     * Subtract vector by float value
+     */
+    [[nodiscard]] Vector2 Subtract(float value) const {
+      return Vector2SubtractValue(*this, value);
+    }
+
+    /**
+     * Subtract vector by float value
+     */
+    Vector2 operator-(float value) const {
+      return Vector2SubtractValue(*this, value);
+    }
+
+    /**
+     * Subtract vector by float value
+     */
+    Vector2& operator-=(float value) {
+        set(Vector2SubtractValue(*this, value));
 
         return *this;
     }
