@@ -5,7 +5,7 @@
 #include "./raylib.hpp"
 #include "./raymath.hpp"
 #include "./RadiansDegrees.hpp"
-#include "include/Vector4.hpp"
+#include "./Vector4.hpp"
 
 #ifndef RAYLIB_CPP_NO_MATH
 #include <cmath>

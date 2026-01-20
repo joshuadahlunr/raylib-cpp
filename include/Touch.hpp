@@ -3,6 +3,7 @@
 
 #include "./Functions.hpp"
 #include "./raylib.hpp"
+#include "./Vector2.hpp"
 
 namespace raylib {
 /**

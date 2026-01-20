@@ -91,7 +91,9 @@ public:
     /**
      * Retrieve the width and height of the texture.
      */
-    [[nodiscard]] Vector2 GetSize() const { return {static_cast<float>(width), static_cast<float>(height)}; }
+    Vector2 GetSize() const {
+        return {static_cast<float>(width), static_cast<float>(height)};
+    }
 
     /**
      * Load texture from image data
@@ -153,7 +155,9 @@ public:
     /**
      * Get pixel data from GPU texture and return an Image
      */
-    [[nodiscard]] ::Image GetData() const { return ::LoadImageFromTexture(*this); }
+    Image GetData() const {
+        return ::LoadImageFromTexture(*this);
+    }
 
     /**
      * Get pixel data from GPU texture and return an Image

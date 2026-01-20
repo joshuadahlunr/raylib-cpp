@@ -9,6 +9,7 @@
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./Vector3.hpp"
+#include "./BoundingBox.hpp"
 #include "./RaylibException.hpp"
 #include "./RadiansDegrees.hpp"
 
@@ -21,6 +22,8 @@ class Model : public ::Model {
 public:
     Model() {
         // Nothing.
+        meshes = nullptr;
+        materials = nullptr;
     }
 
     /*

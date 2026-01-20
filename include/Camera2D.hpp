@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_CAMERA2D_HPP_
 
 #include "./Vector2.hpp"
+#include "./Matrix.hpp"
 #include "./RadiansDegrees.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"

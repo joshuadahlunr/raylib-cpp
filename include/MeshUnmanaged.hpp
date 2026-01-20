@@ -59,16 +59,18 @@ public:
     /**
      * Generate polygonal mesh
      */
-    static ::Mesh Poly(int sides, float radius) { return ::GenMeshPoly(sides, radius); }
+    static MeshUnmanaged Poly(int sides, float radius) {
+        return ::GenMeshPoly(sides, radius);
+    }
 
     /**
      * Generate plane mesh (with subdivisions)
      */
-    static ::Mesh Plane(float width, float length, int resX, int resZ) {
+    static MeshUnmanaged Plane(float width, float length, int resX, int resZ) {
         return ::GenMeshPlane(width, length, resX, resZ);
     }
 
-    static ::Mesh Plane(float width, float length, int resX, int resZ, float textureScale) {
+    static MeshUnmanaged Plane(float width, float length, int resX, int resZ, float textureScale) {
         ::Mesh mesh = {};
 
         resX++;
@@ -169,51 +171,63 @@ public:
     /**
      * Generate cuboid mesh
      */
-    static ::Mesh Cube(float width, float height, float length) { return ::GenMeshCube(width, height, length); }
+    static MeshUnmanaged Cube(float width, float height, float length) {
+        return ::GenMeshCube(width, height, length);
+    }
 
     /**
      * Generate sphere mesh (standard sphere)
      */
-    static ::Mesh Sphere(float radius, int rings, int slices) { return ::GenMeshSphere(radius, rings, slices); }
+    static MeshUnmanaged Sphere(float radius, int rings, int slices) {
+        return ::GenMeshSphere(radius, rings, slices);
+    }
 
     /**
      * Generate half-sphere mesh (no bottom cap)
      */
-    static ::Mesh HemiSphere(float radius, int rings, int slices) { return ::GenMeshHemiSphere(radius, rings, slices); }
+    static MeshUnmanaged HemiSphere(float radius, int rings, int slices) {
+        return ::GenMeshHemiSphere(radius, rings, slices);
+    }
 
     /**
      * Generate cylinder mesh
      */
-    static ::Mesh Cylinder(float radius, float height, int slices) { return ::GenMeshCylinder(radius, height, slices); }
+    static MeshUnmanaged Cylinder(float radius, float height, int slices) {
+        return ::GenMeshCylinder(radius, height, slices);
+    }
 
     /**
      * Generate cone/pyramid mesh
      */
-    static ::Mesh Cone(float radius, float height, int slices) { return ::GenMeshCone(radius, height, slices); }
+    static MeshUnmanaged Cone(float radius, float height, int slices) {
+        return ::GenMeshCone(radius, height, slices);
+    }
 
     /**
      * Generate torus mesh
      */
-    static ::Mesh Torus(float radius, float size, int radSeg, int sides) {
+    static MeshUnmanaged Torus(float radius, float size, int radSeg, int sides) {
         return ::GenMeshTorus(radius, size, radSeg, sides);
     }
 
     /**
      * Generate trefoil knot mesh
      */
-    static ::Mesh Knot(float radius, float size, int radSeg, int sides) {
+    static MeshUnmanaged Knot(float radius, float size, int radSeg, int sides) {
         return ::GenMeshKnot(radius, size, radSeg, sides);
     }
 
     /**
      * Generate heightmap mesh from image data
      */
-    static ::Mesh Heightmap(const ::Image& heightmap, ::Vector3 size) { return ::GenMeshHeightmap(heightmap, size); }
+    static MeshUnmanaged Heightmap(const ::Image& heightmap, ::Vector3 size) {
+        return ::GenMeshHeightmap(heightmap, size);
+    }
 
     /**
      * Generate cubes-based map mesh from image data
      */
-    static ::Mesh Cubicmap(const ::Image& cubicmap, ::Vector3 cubeSize) {
+    static MeshUnmanaged Cubicmap(const ::Image& cubicmap, ::Vector3 cubeSize) {
         return ::GenMeshCubicmap(cubicmap, cubeSize);
     }
 

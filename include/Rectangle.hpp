@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_RECTANGLE_HPP_
 
 #include "./Vector2.hpp"
+#include "./Vector4.hpp"
 #include "./RadiansDegrees.hpp"
 
 namespace raylib {
@@ -32,9 +33,13 @@ public:
         return *this;
     }
 
-    ::Vector4 ToVector4() { return {x, y, width, height}; }
+    Vector4 ToVector4() {
+        return {x, y, width, height};
+    }
 
-    explicit operator ::Vector4() const { return {x, y, width, height}; }
+    operator Vector4() const {
+        return {x, y, width, height};
+    }
 
     /**
      * Draw a color-filled rectangle
@@ -100,7 +105,9 @@ public:
     /**
      * Get collision rectangle for two rectangles collision
      */
-    [[nodiscard]] ::Rectangle GetCollision(::Rectangle rec2) const { return ::GetCollisionRec(*this, rec2); }
+    Rectangle GetCollision(::Rectangle rec2) const {
+        return ::GetCollisionRec(*this, rec2);
+    }
 
     /**
      * Check if point is inside rectangle
