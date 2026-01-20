@@ -21,6 +21,11 @@ public:
      */
     AutomationEventList() { set(::LoadAutomationEventList(0)); }
 
+    AutomationEventList(unsigned int capacity = 16384,
+            std::span<AutomationEvent> events = {}) : ::AutomationEventList{capacity, static_cast<unsigned int>(events.size()), events.data()} {
+        // Nothing.
+    }
+
     /**
      * Load automation events list from file.
      *

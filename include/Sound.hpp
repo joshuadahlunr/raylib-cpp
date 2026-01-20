@@ -1,6 +1,7 @@
 #ifndef RAYLIB_CPP_INCLUDE_SOUND_HPP_
 #define RAYLIB_CPP_INCLUDE_SOUND_HPP_
 
+#include <span>
 #include <string>
 #include <string_view>
 
@@ -77,6 +78,14 @@ public:
      */
     Sound& Update(const void* data, int samplesCount) {
         ::UpdateSound(*this, data, samplesCount);
+        return *this;
+    }
+
+    /**
+     * Update sound buffer with new data
+     */
+    Sound& Update(const std::span<std::byte> data) {
+        ::UpdateSound(*this, data.data(), static_cast<int>(data.size()));
         return *this;
     }
 

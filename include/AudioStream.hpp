@@ -2,8 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_AUDIOSTREAM_HPP_
 
 #include "./RaylibException.hpp"
-#include "./raylib-cpp-utils.hpp"
-#include "./raylib.hpp"
+#include <span>
 
 namespace raylib {
 /**
@@ -84,6 +83,14 @@ public:
      */
     AudioStream& Update(const void* data, int samplesCount) {
         ::UpdateAudioStream(*this, data, samplesCount);
+        return *this;
+    }
+
+    /**
+     * Update audio stream buffers with data
+     */
+    AudioStream& Update(std::span<std::byte> data) {
+        ::UpdateAudioStream(*this, data.data(), static_cast<int>(data.size()));
         return *this;
     }
 

@@ -1,6 +1,7 @@
 #ifndef RAYLIB_CPP_INCLUDE_WAVE_HPP_
 #define RAYLIB_CPP_INCLUDE_WAVE_HPP_
 
+#include <span>
 #include <string>
 #include <string_view>
 
@@ -44,7 +45,18 @@ public:
         Load(fileType, fileData, dataSize);
     }
 
-    Wave(const Wave& other) { set(other.Copy()); }
+    /**
+     * Load wave from memory buffer, fileType refers to extension: i.e. "wav"
+     *
+     * @throws raylib::RaylibException Throws if the Wave failed to load.
+     */
+    Wave(const std::string_view fileType, std::span<const unsigned char> fileData) {
+        Load(fileType, fileData);
+    }
+
+    Wave(const Wave& other) {
+        set(other.Copy());
+    }
 
     Wave(Wave&& other) noexcept {
         set(other);
@@ -187,6 +199,18 @@ public:
      */
     void Load(const std::string_view fileType, const unsigned char *fileData, int dataSize) {
         set(::LoadWaveFromMemory(fileType.data(), fileData, dataSize));
+        if (!IsValid()) {
+            throw RaylibException("Failed to load Wave from file data of type: " + std::string(fileType));
+        }
+    }
+
+    /**
+     * Load wave from memory buffer, fileType refers to extension: i.e. "wav"
+     *
+     * @throws raylib::RaylibException Throws if the Wave failed to load.
+     */
+    void Load(const std::string_view fileType, std::span<const unsigned char> fileData) {
+        set(::LoadWaveFromMemory(fileType.data(), fileData.data(), static_cast<int>(fileData.size())));
         if (!IsValid()) {
             throw RaylibException("Failed to load Wave from file data of type: " + std::string(fileType));
         }

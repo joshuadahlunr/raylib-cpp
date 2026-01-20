@@ -4,6 +4,7 @@
 #ifndef RAYLIB_CPP_INCLUDE_FUNCTIONS_HPP_
 #define RAYLIB_CPP_INCLUDE_FUNCTIONS_HPP_
 
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -217,6 +218,13 @@ namespace raylib {
 }
 
 /**
+ * Load animated image data
+ */
+RLCPPAPI inline ::Image LoadImageAnim(const std::string_view fileName, std::span<int> frames) {
+    return ::LoadImageAnim(fileName.data(), frames.data());
+}
+
+/**
  * Load image from memory buffer, fileType refers to extension like "png"
  */
     [[maybe_unused]] RLCPPAPI inline ::Image LoadImageFromMemory(const std::string_view fileType,
@@ -300,6 +308,13 @@ DrawTextEx(const Font& font, char* text, Vector2 position, float fontSize, float
 }
 
 /**
+ * Load font from file (filename must include file extension)
+ */
+RLCPPAPI inline ::Font LoadFontEx(const std::string_view fileName, int fontSize, std::span<int> fontChars) {
+    return ::LoadFontEx(fileName.data(), fontSize, fontChars.data(), static_cast<int>(fontChars.size()));
+}
+
+/**
  * Measure string width for default font
  */
 [[maybe_unused]] RLCPPAPI inline int MeasureText(const char* text, int fontSize) {
@@ -344,14 +359,14 @@ DrawTextEx(const Font& font, char* text, Vector2 position, float fontSize, float
 /**
  * Get text length, checks for '\0' ending
  */
-    [[maybe_unused]] RLCPPAPI inline std::string TextSubtext(const std::string_view text, int position, int length) {
+[[maybe_unused]] RLCPPAPI inline std::string TextSubtext(const std::string_view text, int position, int length) {
     return ::TextSubtext(text.data(), position, length);
 }
 
 /**
  * Replace text string
  */
-    [[maybe_unused]] RLCPPAPI std::string TextReplace(const std::string_view text, const std::string_view replace, const std::string_view by) {
+[[maybe_unused]] RLCPPAPI std::string TextReplace(const std::string_view text, const std::string_view replace, const std::string_view by) {
     const char* input = text.data();
     char* output = ::TextReplace(const_cast<char*>(input), replace.data(), by.data());
     if (output != NULL) {
@@ -365,7 +380,7 @@ DrawTextEx(const Font& font, char* text, Vector2 position, float fontSize, float
 /**
  * Insert text in a position
  */
-    [[maybe_unused]] RLCPPAPI std::string TextInsert(const std::string_view text, const std::string_view insert, int position) {
+[[maybe_unused]] RLCPPAPI std::string TextInsert(const std::string_view text, const std::string_view insert, int position) {
     char* output = ::TextInsert(text.data(), insert.data(), position);
     if (output != NULL) {
         std::string stringOutput(output);
@@ -378,7 +393,7 @@ DrawTextEx(const Font& font, char* text, Vector2 position, float fontSize, float
 /**
  * Split text into multiple strings
  */
-    [[maybe_unused]] RLCPPAPI std::vector<std::string> TextSplit(const std::string_view text, char delimiter) {
+[[maybe_unused]] RLCPPAPI std::vector<std::string> TextSplit(const std::string_view text, char delimiter) {
     int count;
     const char** split = ::TextSplit(text.data(), delimiter, &count);
     return std::vector<std::string>(split, split + count);
@@ -387,35 +402,35 @@ DrawTextEx(const Font& font, char* text, Vector2 position, float fontSize, float
 /**
  * Find first text occurrence within a string
  */
-    [[maybe_unused]] RLCPPAPI inline int TextFindIndex(const std::string_view text, const std::string_view find) {
+[[maybe_unused]] RLCPPAPI inline int TextFindIndex(const std::string_view text, const std::string_view find) {
     return ::TextFindIndex(text.data(), find.data());
 }
 
 /**
  * Get upper case version of provided string
  */
-    [[maybe_unused]] RLCPPAPI inline std::string TextToUpper(const std::string_view text) {
+[[maybe_unused]] RLCPPAPI inline std::string TextToUpper(const std::string_view text) {
     return ::TextToUpper(text.data());
 }
 
 /**
  * Get lower case version of provided string
  */
-    [[maybe_unused]] RLCPPAPI inline std::string TextToLower(const std::string_view text) {
+[[maybe_unused]] RLCPPAPI inline std::string TextToLower(const std::string_view text) {
     return ::TextToLower(text.data());
 }
 
 /**
  * Get Pascal case notation version of provided string
  */
-    [[maybe_unused]] RLCPPAPI inline std::string TextToPascal(const std::string_view text) {
+[[maybe_unused]] RLCPPAPI inline std::string TextToPascal(const std::string_view text) {
     return ::TextToPascal(text.data());
 }
 
 /**
  * Get integer value from text (negative values not supported)
  */
-    [[maybe_unused]] RLCPPAPI inline int TextToInteger(const std::string_view text) {
+[[maybe_unused]] RLCPPAPI inline int TextToInteger(const std::string_view text) {
     return ::TextToInteger(text.data());
 }
 

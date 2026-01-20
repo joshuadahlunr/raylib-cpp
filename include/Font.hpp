@@ -1,8 +1,10 @@
 #ifndef RAYLIB_CPP_INCLUDE_FONT_HPP_
 #define RAYLIB_CPP_INCLUDE_FONT_HPP_
 
+#include <cassert>
 #include <string>
 #include <string_view>
+#include <span>
 
 #include "./RaylibException.hpp"
 #include "./TextureUnmanaged.hpp"
@@ -23,6 +25,14 @@ public:
         ::Rectangle* recs = nullptr,
         ::GlyphInfo* glyphs = nullptr)
         : ::Font{baseSize, glyphCount, glyphPadding, texture, recs, glyphs} {
+        // Nothing.
+    }
+
+    Font(int baseSize,
+            int glyphPadding,
+            ::Texture2D texture,
+            std::span<::Rectangle> recs = {},
+            std::span<::GlyphInfo> glyphs = {}) : ::Font{baseSize, static_cast<int>((assert(glyphs.size() == recs.size()), glyphs.size())), glyphPadding, texture, recs.data(), glyphs.data()} {
         // Nothing.
     }
 
@@ -58,6 +68,19 @@ public:
     }
 
     /**
+     * Loads a Font from the given file, with generation parameters.
+     *
+     * @param fileName The file name of the font to load.
+     *
+     * @throws raylib::RaylibException Throws if the given font failed to initialize.
+     *
+     * @see ::LoadFontEx
+     */
+    Font(const std::string_view fileName, int fontSize, std::span<int> fontChars)  {
+        Load(fileName, fontSize, fontChars.data(), static_cast<int>(fontChars.size()));
+    }
+
+    /**
      * Loads a Font from the given image with a color key.
      *
      * @param image The image to load the fond from.
@@ -78,6 +101,11 @@ public:
     Font(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
             int *fontChars, int charsCount)  {
         Load(fileType, fileData, dataSize, fontSize, fontChars, charsCount);
+    }
+
+    Font(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
+            std::span<int> fontChars)  {
+        Load(fileType, fileData, dataSize, fontSize, fontChars.data(), static_cast<int>(fontChars.size()));
     }
 
     Font(const Font&) = delete;
@@ -178,6 +206,13 @@ public:
         }
     }
 
+    void Load(const std::string_view fileName, int fontSize, std::span<int> fontChars)  {
+        set(::LoadFontEx(fileName.data(), fontSize, fontChars.data(), static_cast<int>(fontChars.size())));
+        if (!IsValid()) {
+            throw new RaylibException("Failed to load Font with from file with font size: " + std::string(fileName));
+        }
+    }
+
     void Load(const ::Image& image, ::Color key, int firstChar) {
         set(::LoadFontFromImage(image, key, firstChar));
         if (!IsValid()) {
@@ -191,6 +226,33 @@ public:
             charsCount));
         if (!IsValid()) {
             throw RaylibException("Failed to load Font " + std::string(fileType) + " with from file data");
+        }
+    }
+
+    void Load(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
+            std::span<int> fontChars)  {
+        set(::LoadFontFromMemory(fileType.data(), fileData, dataSize, fontSize, fontChars.data(),
+            static_cast<int>(fontChars.size())));
+        if (!IsValid()) {
+            throw new RaylibException("Failed to load Font " + std::string(fileType) + " with from file data");
+        }
+    }
+
+    void Load(const std::string_view fileType, std::span<unsigned char> fileData, int fontSize,
+            int *fontChars, int charsCount)  {
+        set(::LoadFontFromMemory(fileType.data(), fileData.data(), static_cast<int>(fileData.size()), fontSize, fontChars,
+            charsCount));
+        if (!IsValid()) {
+            throw RaylibException("Failed to load Font " + std::string(fileType) + " with from file data");
+        }
+    }
+
+    void Load(const std::string_view fileType, std::span<unsigned char> fileData, int fontSize,
+            std::span<int> fontChars)  {
+        set(::LoadFontFromMemory(fileType.data(), fileData.data(), static_cast<int>(fileData.size()), fontSize, fontChars.data(),
+            static_cast<int>(fontChars.size())));
+        if (!IsValid()) {
+            throw new RaylibException("Failed to load Font " + std::string(fileType) + " with from file data");
         }
     }
 
@@ -277,6 +339,18 @@ public:
         float spacing,
         ::Color tint = {255, 255, 255, 255}) const {
         ::DrawTextCodepoints(*this, codepoints, count, position, fontSize, spacing, tint);
+    }
+
+    /**
+     * Draw multiple character (codepoint)
+     */
+    inline void DrawText(std::span<const int> codepoints, ::Vector2 position,
+            float fontSize, float spacing,
+            ::Color tint = { 255, 255, 255, 255 }) const {
+        ::DrawTextCodepoints(*this,
+            codepoints.data(), static_cast<int>(codepoints.size()),
+            position, fontSize,
+            spacing, tint);
     }
 
     /**

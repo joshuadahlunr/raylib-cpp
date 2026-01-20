@@ -1,6 +1,7 @@
 #ifndef RAYLIB_CPP_INCLUDE_MATERIAL_HPP_
 #define RAYLIB_CPP_INCLUDE_MATERIAL_HPP_
 
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -100,6 +101,13 @@ public:
      */
     void DrawMesh(const ::Mesh& mesh, ::Matrix* transforms, int instances) const {
         ::DrawMeshInstanced(mesh, *this, transforms, instances);
+    }
+
+    /**
+     * Draw multiple mesh instances with material and different transforms
+     */
+    inline void DrawMesh(const ::Mesh& mesh, std::span<::Matrix> transforms) const {
+        ::DrawMeshInstanced(mesh, *this, transforms.data(), static_cast<int>(transforms.size()));
     }
 
     /**
