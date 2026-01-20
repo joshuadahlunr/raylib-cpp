@@ -20,6 +20,9 @@ set(CMAKE_CXX_STANDARD 20)
 # Include Directory
 add_subdirectory(include)
 
+# Add raylib and raygui as submodules
+add_subdirectory(raygui/projects/CMake)
+
 # Modules
 option(BUILD_RAYLIB_CPP_MODULES "Build C++ modules support" OFF)
 
