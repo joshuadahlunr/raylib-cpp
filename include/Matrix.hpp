@@ -484,7 +484,9 @@ protected:
         m15 = mat.m15;
     }
 };
-} // namespace raylib
+
+using Transform = Matrix; // raylib::Transform is also a matrix
+}  // namespace raylib
 
 using RMatrix = raylib::Matrix;
 
