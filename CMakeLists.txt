@@ -21,6 +21,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_subdirectory(include)
 
 # Add raylib and raygui as submodules
+add_subdirectory(raylib)
 add_subdirectory(raygui/projects/CMake)
 add_subdirectory(BufferedRaylib)
 

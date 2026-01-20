@@ -3,6 +3,9 @@
 	url = https://github.com/jothepro/doxygen-awesome-css.git
     branch = main
     ignore = dirty
+[submodule "raylib"]
+	path = raylib
+	url = https://github.com/joshuadahlunr/raylib.git
 [submodule "raygui"]
 	path = raygui
 	url = https://github.com/joshuadahlunr/raygui.git
