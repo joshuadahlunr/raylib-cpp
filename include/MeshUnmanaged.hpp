@@ -202,9 +202,32 @@ public:
     [[nodiscard]] raylib::BoundingBox BoundingBox() const { return ::GetMeshBoundingBox(*this); }
 
     /**
-     * Compute mesh bounding box limits
+     * Compute mesh bounding box limits with respect to the given transformation
      */
-    operator raylib::BoundingBox() const { return BoundingBox(); }
+    raylib::BoundingBox GetTransformedBoundingBox(::Matrix transform) const {
+        // Get min and max vertex to construct bounds (AABB)
+        raylib::Vector3 minVertex = { 0 };
+        raylib::Vector3 maxVertex = { 0 };
+
+        if (vertices != NULL)
+        {
+            minVertex = raylib::Vector3{ vertices[0], vertices[1], vertices[2] }.Transform(transform);
+            maxVertex = raylib::Vector3{ vertices[0], vertices[1], vertices[2] }.Transform(transform);
+
+            for (int i = 1; i < vertexCount; i++)
+            {
+                minVertex = Vector3Min(minVertex, raylib::Vector3{ vertices[i*3], vertices[i*3 + 1], vertices[i*3 + 2] }.Transform(transform));
+                maxVertex = Vector3Max(maxVertex, raylib::Vector3{ vertices[i*3], vertices[i*3 + 1], vertices[i*3 + 2] }.Transform(transform));
+            }
+        }
+
+        // Create the bounding box
+        raylib::BoundingBox box = {};
+        box.min = minVertex;
+        box.max = maxVertex;
+
+        return box;
+    }
 
     /**
      * Compute mesh tangents
@@ -249,7 +272,34 @@ protected:
         vboId = mesh.vboId;
     }
 };
-} // namespace raylib
+
+inline BoundingBox Model::GetTransformedBoundingBox() const {
+    BoundingBox bounds = {};
+
+    if (meshCount > 0)
+    {
+        Vector3 temp = { 0 };
+        bounds = (*(raylib::MeshUnmanaged*)(&meshes[0])).GetTransformedBoundingBox(transform);
+
+        for (int i = 1; i < meshCount; i++)
+        {
+            BoundingBox tempBounds = (*(raylib::MeshUnmanaged*)(&meshes[i])).GetTransformedBoundingBox(transform);
+
+            temp.x = (bounds.min.x < tempBounds.min.x)? bounds.min.x : tempBounds.min.x;
+            temp.y = (bounds.min.y < tempBounds.min.y)? bounds.min.y : tempBounds.min.y;
+            temp.z = (bounds.min.z < tempBounds.min.z)? bounds.min.z : tempBounds.min.z;
+            bounds.min = temp;
+
+            temp.x = (bounds.max.x > tempBounds.max.x)? bounds.max.x : tempBounds.max.x;
+            temp.y = (bounds.max.y > tempBounds.max.y)? bounds.max.y : tempBounds.max.y;
+            temp.z = (bounds.max.z > tempBounds.max.z)? bounds.max.z : tempBounds.max.z;
+            bounds.max = temp;
+        }
+    }
+
+    return bounds;
+}
+}  // namespace raylib
 
 using RMeshUnmanaged = raylib::MeshUnmanaged;
 

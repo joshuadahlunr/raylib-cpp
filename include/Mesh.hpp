@@ -4,10 +4,12 @@
 #include <string>
 #include <vector>
 
-#include "./MeshUnmanaged.hpp"
-#include "./Model.hpp"
-#include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
+#include "./raylib-cpp-utils.hpp"
+#include "./BoundingBox.hpp"
+#include "./MeshUnmanaged.hpp"
+#include "./Vector3.hpp"
+// #include "./Model.hpp"
 
 namespace raylib {
 /**

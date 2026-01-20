@@ -7,6 +7,7 @@
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
+#include "./Vector3.hpp"
 #include "./RaylibException.hpp"
 #include "./RadiansDegrees.hpp"
 
@@ -189,21 +190,22 @@ public:
     }
 
     /**
-     * Draw a model as points
+     * Compute model bounding box limits with respect to the Model's transformation (considers all meshes)
+     * This function is pretty expensive!
      */
-    void DrawPoints(::Vector3 position, ::Vector3 rotationAxis, float rotationAngle = 0.0f, ::Vector3 scale = {1.0f, 1.0f, 1.0f}, ::Color tint = {255, 255, 255, 255}) {
-        ::DrawModelPointsEx(*this, position, rotationAxis, rotationAngle, scale, tint);
+    BoundingBox GetTransformedBoundingBox() const;
+
+    /**
+     * Compute model bounding box limits (considers all meshes)
+     */
+    operator BoundingBox() const {
+        return GetBoundingBox();
     }
 
     /**
      * Compute model bounding box limits (considers all meshes)
      */
     [[nodiscard]] BoundingBox GetBoundingBox() const { return ::GetModelBoundingBox(*this); }
-
-    /**
-     * Compute model bounding box limits (considers all meshes)
-     */
-    explicit operator BoundingBox() const { return ::GetModelBoundingBox(*this); }
 
     /**
      * Determines whether or not the Model has data in it.
