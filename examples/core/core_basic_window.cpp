@@ -19,6 +19,8 @@
 *
 ********************************************************************************************/
 
+// This version of the repository has been specially modified for the CS381 Game Engine Architecture Class at UNR
+
 #include "raylib-cpp.hpp"
 
 int main() {
@@ -26,14 +28,16 @@ int main() {
     //--------------------------------------------------------------------------------------
     int screenWidth = 800;
     int screenHeight = 450;
+
+    raylib::Window window(screenWidth, screenHeight, "raylib-cpp - basic window");
+    raylib::Texture logo("raylib_logo.png");
     raylib::Color textColor = raylib::Color::LightGray();
-    raylib::Window window(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!window.ShouldClose()) {   // Detect window close button or ESC key
+    while (!window.ShouldClose()) { // Detect window close button or ESC key
         // Update
         //----------------------------------------------------------------------------------
         // Update your variables here
@@ -41,12 +45,16 @@ int main() {
 
         // Draw
         //----------------------------------------------------------------------------------
-        while (window.Drawing()) {
-            window.ClearBackground(RAYWHITE);
+        window.BeginDrawing();
+		{
+			window.ClearBackground(RAYWHITE);
             textColor.DrawText("Congrats! You created your first window!", 190, 200, 20);
         }
+        window.EndDrawing();
         //----------------------------------------------------------------------------------
     }
+
+    // UnloadTexture() and CloseWindow() are called automatically.
 
     return 0;
 }

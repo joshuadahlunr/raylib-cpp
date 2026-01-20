@@ -15,23 +15,24 @@ int main() {
 
     raylib::Window window(screenWidth, screenHeight, "raylib-cpp - basic window");
     raylib::Texture logo("raylib_logo.png");
+    raylib::Color textColor = raylib::Color::LightGray();
 
     SetTargetFPS(60);
 
-    while (!window.ShouldClose())
-    {
-        BeginDrawing();
+    while (!window.ShouldClose()) {
+        window.BeginDrawing();
+		{
+			window.ClearBackground(RAYWHITE);
 
-        window.ClearBackground(RAYWHITE);
+            textColor.DrawText("Congrats! You created your first window!", 190, 200, 20);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+            // Object methods.
+            logo.Draw(
+                screenWidth / 2 - logo.GetWidth() / 2,
+                screenHeight / 2 - logo.GetHeight() / 2);
 
-        // Object methods.
-        logo.Draw(
-            screenWidth / 2 - logo.GetWidth() / 2,
-            screenHeight / 2 - logo.GetHeight() / 2);
-
-        EndDrawing();
+        }
+        window.EndDrawing();
     }
 
     // UnloadTexture() and CloseWindow() are called automatically.
