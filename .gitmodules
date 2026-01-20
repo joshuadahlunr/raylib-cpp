@@ -6,3 +6,6 @@
 [submodule "raygui"]
 	path = raygui
 	url = https://github.com/joshuadahlunr/raygui.git
+[submodule "BufferedRaylib"]
+	path = BufferedRaylib
+	url = https://github.com/joshuadahlunr/BufferedRaylib
