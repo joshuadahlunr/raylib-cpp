@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_COLOR_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./Vector4.hpp"
 #include "./RadiansDegrees.hpp"
@@ -129,17 +130,17 @@ public:
         ::DrawText(text, posX, posY, fontSize, *this);
     }
 
-    void DrawText(const std::string& text, int posX = 0, int posY = 0, int fontSize = 10.0f) const {
-        ::DrawText(text.c_str(), posX, posY, fontSize, *this);
+    void DrawText(const std::string_view text, int posX = 0, int posY = 0, int fontSize = 10.0f) const {
+        ::DrawText(text.data(), posX, posY, fontSize, *this);
     }
 
     void DrawText(const ::Font& font, const char* text, ::Vector2 position, float fontSize, float spacing) const {
         ::DrawTextEx(font, text, position, fontSize, spacing, *this);
     }
 
-    void
-    DrawText(const ::Font& font, const std::string& text, ::Vector2 position, float fontSize, float spacing) const {
-        ::DrawTextEx(font, text.c_str(), position, fontSize, spacing, *this);
+    void DrawText(const ::Font& font, const std::string_view text, ::Vector2 position,
+            float fontSize, float spacing) const {
+        ::DrawTextEx(font, text.data(), position, fontSize, spacing, *this);
     }
 
     void DrawText(
@@ -155,13 +156,13 @@ public:
 
     void DrawText(
             const ::Font& font,
-            const std::string& text,
+            const std::string_view text,
             ::Vector2 position,
             ::Vector2 origin,
             Degree rotation,
             float fontSize,
             float spacing) const {
-        ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, *this);
+        ::DrawTextPro(font, text.data(), position, origin, rotation, fontSize, spacing, *this);
     }
 
     void DrawRectangle(int posX, int posY, int width, int height) const {

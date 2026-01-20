@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_WINDOW_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./RaylibException.hpp"
 #include "./Vector2.hpp"
@@ -34,8 +35,8 @@ public:
      *
      * @throws raylib::RaylibException Thrown if the window failed to initiate.
      */
-    Window(int width, int height, const std::string& title = "raylib", unsigned int flags = 0, TraceLogLevel logLevel = LOG_ALL) {
-        Init(width, height, title, flags, logLevel);
+    Window(int width, int height, const std::string_view title = "raylib", unsigned int flags = 0) {
+        Init(width, height, title, flags);
     }
 
     /**
@@ -56,12 +57,11 @@ public:
      *
      * @throws raylib::RaylibException Thrown if the window failed to initiate.
      */
-    static void Init(int width = 800, int height = 450, const std::string& title = "raylib", unsigned int flags = 0, TraceLogLevel logLevel = LOG_ALL) {
+    void Init(int width = 800, int height = 450, const std::string_view title = "raylib", unsigned int flags = 0) {
         if (flags != 0) {
             ::SetConfigFlags(flags);
         }
-        ::SetTraceLogLevel(logLevel);
-        ::InitWindow(width, height, title.c_str());
+        ::InitWindow(width, height, title.data());
         if (!::IsWindowReady()) {
             throw RaylibException("Failed to create Window");
         }
@@ -242,8 +242,8 @@ public:
     /**
      * Set title for window
      */
-    Window& SetTitle(const std::string& title) {
-        ::SetWindowTitle(title.c_str());
+    Window& SetTitle(const std::string_view title) {
+        ::SetWindowTitle(title.data());
         return *this;
     }
 
@@ -379,7 +379,9 @@ public:
     /**
      * Set clipboard text content
      */
-    static void SetClipboardText(const std::string& text) { ::SetClipboardText(text.c_str()); }
+    void SetClipboardText(const std::string_view text) {
+        ::SetClipboardText(text.data());
+    }
 
     /**
      * Get clipboard text content
@@ -417,7 +419,7 @@ public:
     /**
      * Check if window has been initialized successfully
      */
-    static bool IsReady() { return ::IsWindowReady(); }
+    static bool IsValid() { return ::IsWindowReady(); }
 
     /**
      * Sets the configuration flags for raylib.

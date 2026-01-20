@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
         raylib::Vector2 speed(10, 10);
         position += speed;
         AssertEqual(position.x, 310);
-        AssertEqual(raylib::Window::IsReady(), false);
+        AssertEqual(raylib::Window::IsValid(), false);
 
         raylib::Vector2 size{50, 100};
         raylib::Vector2 halfsize = size / 2.0f;

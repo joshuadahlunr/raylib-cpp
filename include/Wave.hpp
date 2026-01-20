@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_WAVE_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./RaylibException.hpp"
 #include "./raylib-cpp-utils.hpp"
@@ -30,14 +31,16 @@ public:
      *
      * @throws raylib::RaylibException Throws if the Wave failed to load.
      */
-    Wave(const std::string& fileName) { Load(fileName); }
+    Wave(const std::string_view fileName) {
+        Load(fileName);
+    }
 
     /**
      * Load wave from memory buffer, fileType refers to extension: i.e. "wav"
      *
      * @throws raylib::RaylibException Throws if the Wave failed to load.
      */
-    Wave(const std::string& fileType, const unsigned char* fileData, int dataSize) {
+    Wave(const std::string_view fileType, const unsigned char *fileData, int dataSize) {
         Load(fileType, fileData, dataSize);
     }
 
@@ -131,17 +134,17 @@ public:
     /**
      * Export wave data to file, returns true on success
      */
-    bool Export(const std::string& fileName) {
+    bool Export(const std::string_view fileName) {
         // TODO(RobLoach): Throw exception on error.
-        return ::ExportWave(*this, fileName.c_str());
+        return ::ExportWave(*this, fileName.data());
     }
 
     /**
      * Export wave sample data to code (.h), returns true on success
      */
-    bool ExportAsCode(const std::string& fileName) {
+    bool ExportAsCode(const std::string_view fileName) {
         // TODO(RobLoach): Throw exception on error.
-        return ::ExportWaveAsCode(*this, fileName.c_str());
+        return ::ExportWaveAsCode(*this, fileName.data());
     }
 
     /**
@@ -170,10 +173,10 @@ public:
      *
      * @throws raylib::RaylibException Throws if the Wave failed to load.
      */
-    void Load(const std::string& fileName) {
-        set(::LoadWave(fileName.c_str()));
+    void Load(const std::string_view fileName) {
+        set(::LoadWave(fileName.data()));
         if (!IsValid()) {
-            throw RaylibException("Failed to load Wave from file: " + fileName);
+            throw RaylibException("Failed to load Wave from file: " + std::string(fileName));
         }
     }
 
@@ -182,10 +185,10 @@ public:
      *
      * @throws raylib::RaylibException Throws if the Wave failed to load.
      */
-    void Load(const std::string& fileType, const unsigned char* fileData, int dataSize) {
-        set(::LoadWaveFromMemory(fileType.c_str(), fileData, dataSize));
+    void Load(const std::string_view fileType, const unsigned char *fileData, int dataSize) {
+        set(::LoadWaveFromMemory(fileType.data(), fileData, dataSize));
         if (!IsValid()) {
-            throw RaylibException("Failed to load Wave from file data of type: " + fileType);
+            throw RaylibException("Failed to load Wave from file data of type: " + std::string(fileType));
         }
     }
 

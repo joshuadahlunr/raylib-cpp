@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_MUSIC_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./RaylibException.hpp"
 #include "./raylib-cpp-utils.hpp"
@@ -28,14 +29,18 @@ public:
      *
      * @throws raylib::RaylibException Throws if the music failed to load.
      */
-    Music(const std::string& fileName) { Load(fileName); }
+    Music(const std::string_view fileName) {
+        Load(fileName);
+    }
 
     /**
      * Load music stream from memory
      *
      * @throws raylib::RaylibException Throws if the music failed to load.
      */
-    Music(const std::string& fileType, unsigned char* data, int dataSize) { Load(fileType, data, dataSize); }
+    Music(const std::string_view fileType, unsigned char* data, int dataSize) {
+        Load(fileType, data, dataSize);
+    }
 
     Music(const Music&) = delete;
 
@@ -181,10 +186,10 @@ public:
      *
      * @throws raylib::RaylibException Throws if the music failed to load.
      */
-    void Load(const std::string& fileName) {
-        set(::LoadMusicStream(fileName.c_str()));
+    void Load(const std::string_view fileName) {
+        set(::LoadMusicStream(fileName.data()));
         if (!IsValid()) {
-            throw RaylibException(TextFormat("Failed to load Music from file: %s", fileName.c_str()));
+            throw RaylibException(TextFormat("Failed to load Music from file: %s", fileName.data()));
         }
     }
 
@@ -193,10 +198,10 @@ public:
      *
      * @throws raylib::RaylibException Throws if the music failed to load.
      */
-    void Load(const std::string& fileType, unsigned char* data, int dataSize) {
-        set(::LoadMusicStreamFromMemory(fileType.c_str(), data, dataSize));
+    void Load(const std::string_view fileType, unsigned char* data, int dataSize) {
+        set(::LoadMusicStreamFromMemory(fileType.data(), data, dataSize));
         if (!IsValid()) {
-            throw RaylibException(TextFormat("Failed to load Music from %s file dat", fileType.c_str()));
+            throw RaylibException(TextFormat("Failed to load Music from %s file dat", fileType.data()));
         }
     }
 

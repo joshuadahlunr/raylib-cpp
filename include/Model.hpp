@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_MODEL_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./RaylibException.hpp"
 #include "./raylib-cpp-utils.hpp"
@@ -32,7 +33,9 @@ public:
      *
      * @throws raylib::RaylibException Throws if failed to load the Modal.
      */
-    Model(const std::string& fileName) { Load(fileName); }
+    Model(const std::string_view fileName) {
+        Load(fileName);
+    }
 
     /*
      * Load a model from a mesh.
@@ -217,10 +220,10 @@ public:
      *
      * @throws raylib::RaylibException Throws if failed to load the Modal.
      */
-    void Load(const std::string& fileName) {
-        set(::LoadModel(fileName.c_str()));
+    void Load(const std::string_view fileName) {
+        set(::LoadModel(fileName.data()));
         if (!IsValid()) {
-            throw RaylibException("Failed to load Model from " + fileName);
+            throw RaylibException("Failed to load Model from " + std::string(fileName));
         }
     }
 

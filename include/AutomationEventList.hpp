@@ -2,8 +2,8 @@
 #define RAYLIB_CPP_INCLUDE_AUTOMATIONEVENTLIST_HPP_
 
 #include "./RaylibException.hpp"
-#include "./raylib-cpp-utils.hpp"
-#include "./raylib.hpp"
+#include <span>
+#include <string_view>
 
 namespace raylib {
 /**
@@ -26,7 +26,12 @@ public:
      *
      * @param fileName The file path to load the automation events list from.
      */
-    AutomationEventList(const char* fileName) { Load(fileName); }
+    AutomationEventList(const char* fileName) {
+        Load(fileName);
+    }
+    AutomationEventList(const std::string_view fileName) {
+        Load(fileName.data());
+    }
 
     AutomationEventList(const AutomationEventList&) = delete;
 
@@ -80,6 +85,19 @@ public:
     }
 
     /**
+     * Load audio stream (to stream raw audio pcm data)
+     *
+     * @throws raylib::RaylibException Throws if the AutomationEventList failed to load.
+     */
+    void Load(const std::string_view fileName) {
+        Unload();
+        set(::LoadAutomationEventList(fileName.data()));
+        if (!IsValid()) {
+            throw RaylibException("Failed to load automation event list");
+        }
+    }
+
+    /**
      * Update audio stream buffers with data
      */
     void Unload() {
@@ -103,7 +121,13 @@ public:
 
     bool Export(const char* fileName) { return ::ExportAutomationEventList(*this, fileName); }
 
-    void Set() { ::SetAutomationEventList(this); }
+    bool Export(const std::string_view fileName) {
+        return ::ExportAutomationEventList(*this, fileName.data());
+    }
+
+    void Set() {
+        ::SetAutomationEventList(this);
+    }
 
     void SetBaseFrame(int frame) {
         Set();

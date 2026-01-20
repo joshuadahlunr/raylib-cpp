@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_FONT_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./RaylibException.hpp"
 #include "./TextureUnmanaged.hpp"
@@ -39,7 +40,9 @@ public:
      *
      * @throws raylib::RaylibException Throws if the given font failed to initialize.
      */
-    Font(const std::string& fileName) { Load(fileName); }
+    Font(const std::string_view fileName) {
+        Load(fileName);
+    }
 
     /**
      * Loads a Font from the given file, with generation parameters.
@@ -50,7 +53,7 @@ public:
      *
      * @see ::LoadFontEx
      */
-    Font(const std::string& fileName, int fontSize, int* fontChars = 0, int charCount = 0) {
+    Font(const std::string_view fileName, int fontSize, int* fontChars = 0, int charCount = 0)  {
         Load(fileName, fontSize, fontChars, charCount);
     }
 
@@ -72,13 +75,8 @@ public:
      *
      * @see ::LoadFontFromMemory()
      */
-    Font(
-        const std::string& fileType,
-        const unsigned char* fileData,
-        int dataSize,
-        int fontSize,
-        int* fontChars,
-        int charsCount) {
+    Font(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
+            int *fontChars, int charsCount)  {
         Load(fileType, fileData, dataSize, fontSize, fontChars, charsCount);
     }
 
@@ -156,10 +154,10 @@ public:
      *
      * @see ::LoadFont()
      */
-    void Load(const std::string& fileName) {
-        set(::LoadFont(fileName.c_str()));
+    void Load(const std::string_view fileName) {
+        set(::LoadFont(fileName.data()));
         if (!IsValid()) {
-            throw RaylibException("Failed to load Font with from file: " + fileName);
+            throw RaylibException("Failed to load Font with from file: " + std::string(fileName));
         }
     }
 
@@ -173,10 +171,10 @@ public:
      *
      * @see ::LoadFontEx()
      */
-    void Load(const std::string& fileName, int fontSize, int* fontChars, int charCount) {
-        set(::LoadFontEx(fileName.c_str(), fontSize, fontChars, charCount));
+    void Load(const std::string_view fileName, int fontSize, int* fontChars, int charCount)  {
+        set(::LoadFontEx(fileName.data(), fontSize, fontChars, charCount));
         if (!IsValid()) {
-            throw RaylibException("Failed to load Font with from file with font size: " + fileName);
+            throw RaylibException("Failed to load Font with from file with font size: " + std::string(fileName));
         }
     }
 
@@ -187,16 +185,12 @@ public:
         }
     }
 
-    void Load(
-        const std::string& fileType,
-        const unsigned char* fileData,
-        int dataSize,
-        int fontSize,
-        int* fontChars,
-        int charsCount) {
-        set(::LoadFontFromMemory(fileType.c_str(), fileData, dataSize, fontSize, fontChars, charsCount));
+    void Load(const std::string_view fileType, const unsigned char* fileData, int dataSize, int fontSize,
+            int *fontChars, int charsCount)  {
+        set(::LoadFontFromMemory(fileType.data(), fileData, dataSize, fontSize, fontChars,
+            charsCount));
         if (!IsValid()) {
-            throw RaylibException("Failed to load Font " + fileType + " with from file data");
+            throw RaylibException("Failed to load Font " + std::string(fileType) + " with from file data");
         }
     }
 
@@ -215,9 +209,9 @@ public:
     /**
      * Draw text using font and additional parameters.
      */
-    void
-    DrawText(const std::string& text, ::Vector2 position, float fontSize, float spacing, ::Color tint = WHITE) const {
-        ::DrawTextEx(*this, text.c_str(), position, fontSize, spacing, tint);
+    void DrawText(const std::string_view text, ::Vector2 position, float fontSize,
+            float spacing, ::Color tint = WHITE) const {
+        ::DrawTextEx(*this, text.data(), position,  fontSize,  spacing,  tint);
     }
 
     /**
@@ -230,15 +224,11 @@ public:
     /**
      * Draw text using font and additional parameters.
      */
-    void
-    DrawText(const std::string& text, int posX, int posY, float fontSize, float spacing, ::Color tint = WHITE) const {
-        ::DrawTextEx(
-            *this,
-            text.c_str(),
-            {static_cast<float>(posX), static_cast<float>(posY)},
-            fontSize,
-            spacing,
-            tint);
+    void DrawText(const std::string_view text, int posX, int posY, float fontSize,
+            float spacing, ::Color tint = WHITE) const {
+        ::DrawTextEx(*this, text.data(),
+            { static_cast<float>(posX), static_cast<float>(posY) },
+            fontSize, spacing, tint);
     }
 
     void DrawText(
@@ -256,14 +246,14 @@ public:
     }
 
     void DrawText(
-            const std::string& text,
+            const std::string_view text,
             ::Vector2 position,
             ::Vector2 origin,
             Degree rotation,
             float fontSize,
             float spacing,
             ::Color tint = WHITE) const {
-        ::DrawTextPro(*this, text.c_str(),
+        ::DrawTextPro(*this, text.data(),
             position, origin,
             rotation, fontSize,
             spacing, tint);
@@ -299,8 +289,8 @@ public:
     /**
      * Measure string size for Font
      */
-    [[nodiscard]] Vector2 MeasureText(const std::string& text, float fontSize, float spacing) const {
-        return ::MeasureTextEx(*this, text.c_str(), fontSize, spacing);
+    Vector2 MeasureText(const std::string_view text, float fontSize, float spacing) const {
+        return ::MeasureTextEx(*this, text.data(), fontSize, spacing);
     }
 
     /**
@@ -318,8 +308,9 @@ public:
     /**
      * Create an image from text (custom sprite font)
      */
-    [[nodiscard]] ::Image ImageText(const std::string& text, float fontSize, float spacing, ::Color tint) const {
-        return ::ImageTextEx(*this, text.c_str(), fontSize, spacing, tint);
+    ::Image ImageText(const std::string_view text, float fontSize,
+            float spacing, ::Color tint) const {
+        return ::ImageTextEx(*this, text.data(), fontSize, spacing, tint);
     }
 protected:
     void set(const ::Font& font) {

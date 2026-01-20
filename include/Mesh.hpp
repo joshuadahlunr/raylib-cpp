@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_MESH_HPP_
 
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include "./raylib.hpp"

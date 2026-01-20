@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_TEXTUREUNMANAGED_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./Image.hpp"
 #include "./Material.hpp"
@@ -68,7 +69,9 @@ public:
      *
      * @throws raylib::RaylibException Throws if failed to create the texture from the given file.
      */
-    TextureUnmanaged(const std::string& fileName) { Load(fileName); }
+    TextureUnmanaged(const std::string_view fileName) {
+        Load(fileName);
+    }
 
     TextureUnmanaged(::Texture&& other) : ::Texture{other.id, other.width, other.height, other.mipmaps, other.format} {
         // Nothing.
@@ -113,10 +116,10 @@ public:
     /**
      * Load texture from file into GPU memory (VRAM)
      */
-    void Load(const std::string& fileName) {
-        set(::LoadTexture(fileName.c_str()));
+    void Load(const std::string_view fileName) {
+        set(::LoadTexture(fileName.data()));
         if (!IsValid()) {
-            throw RaylibException("Failed to load Texture from file: " + fileName);
+            throw RaylibException("Failed to load Texture from file: " + std::string(fileName));
         }
     }
 

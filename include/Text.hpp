@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_TEXT_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./RaylibException.hpp"
 #include "./raylib-cpp-utils.hpp"
@@ -48,16 +49,16 @@ public:
      * @param spacing The spacing of the text.
      */
     Text(
-        const std::string& text = "",
-        float fontSize = 10,
-        const ::Color& color = WHITE,
-        const ::Font& font = ::GetFontDefault(),
-        float spacing = 0)
-        : text(text)
-        , fontSize(fontSize)
-        , color(color)
-        , font(font)
-        , spacing(spacing) {
+            const std::string_view text = "",
+            float fontSize = 10,
+            const ::Color& color = WHITE,
+            const ::Font& font = ::GetFontDefault(),
+            float spacing = 0) :
+            text(text),
+            fontSize(fontSize),
+            color(color),
+            font(font),
+            spacing(spacing) {
         // Nothing.
     }
 
@@ -71,16 +72,16 @@ public:
      * @param color The color of the font.
      */
     Text(
-        const ::Font& font,
-        const std::string& text = "",
-        float fontSize = 10,
-        float spacing = 0,
-        const ::Color& color = WHITE)
-        : text(text)
-        , fontSize(fontSize)
-        , color(color)
-        , font(font)
-        , spacing(spacing) {
+            const ::Font& font,
+            const std::string_view text = "",
+            float fontSize = 10,
+            float spacing = 0,
+            const ::Color& color = WHITE) :
+            text(text),
+            fontSize(fontSize),
+            color(color),
+            font(font),
+            spacing(spacing) {
         // Nothing.
     }
 
@@ -146,9 +147,13 @@ public:
      *
      * @see ::DrawText
      */
-    static void
-    Draw(const std::string& text, const int posX, const int posY, const int fontSize, const ::Color& color) {
-        ::DrawText(text.c_str(), posX, posY, fontSize, color);
+    static void Draw(
+            const std::string_view text,
+            const int posX,
+            const int posY,
+            const int fontSize,
+            const ::Color& color) {
+        ::DrawText(text.data(), posX, posY, fontSize, color);
     }
 
     /**
@@ -156,8 +161,12 @@ public:
      *
      * @see ::DrawText
      */
-    static void Draw(const std::string& text, const ::Vector2& pos, const int fontSize, const ::Color& color) {
-        ::DrawText(text.c_str(), static_cast<int>(pos.x), static_cast<int>(pos.y), fontSize, color);
+    static void Draw(
+            const std::string_view text,
+            const ::Vector2& pos,
+            const int fontSize,
+            const ::Color& color) {
+        ::DrawText(text.data(), static_cast<int>(pos.x), static_cast<int>(pos.y), fontSize, color);
     }
 
     /**
@@ -166,13 +175,13 @@ public:
      * @see ::DrawTextEx
      */
     static void Draw(
-        const ::Font& font,
-        const std::string& text,
-        const ::Vector2& position,
-        const float fontSize,
-        const float spacing,
-        const ::Color& color) {
-        ::DrawTextEx(font, text.c_str(), position, fontSize, spacing, color);
+            const ::Font& font,
+            const std::string_view text,
+            const ::Vector2& position,
+            const float fontSize,
+            const float spacing,
+            const ::Color& color) {
+        ::DrawTextEx(font, text.data(), position, fontSize, spacing, color);
     }
 
     /**
@@ -182,14 +191,14 @@ public:
      */
     static void Draw(
             const ::Font& font,
-            const std::string& text,
+            const std::string_view text,
             const ::Vector2& position,
             const ::Vector2& origin,
             const Degree rotation,
             const float fontSize,
             const float spacing,
             const ::Color& color) {
-        ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, color);
+        ::DrawTextPro(font, text.data(), position, origin, rotation, fontSize, spacing, color);
     }
 };
 } // namespace raylib

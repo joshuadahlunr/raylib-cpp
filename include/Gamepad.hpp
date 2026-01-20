@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_GAMEPAD_HPP_
 
 #include <string>
+#include <string_view>
 
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
@@ -88,7 +89,9 @@ public:
      */
     [[nodiscard]] float GetAxisMovement(int axis) const { return ::GetGamepadAxisMovement(number, axis); }
 
-    static int SetMappings(const std::string& mappings) { return SetGamepadMappings(mappings.c_str()); }
+    int SetMappings(const std::string_view mappings) {
+        return SetGamepadMappings(mappings.data());
+    }
 
     /**
      * Set gamepad vibration for both motors (duration in seconds)
