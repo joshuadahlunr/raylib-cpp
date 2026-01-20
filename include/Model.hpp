@@ -6,6 +6,9 @@
 #include "./RaylibException.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
+#include "./raylib-cpp-utils.hpp"
+#include "./RaylibException.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 class Mesh;
@@ -151,11 +154,11 @@ public:
      * Draw a model with extended parameters
      */
     void Draw(
-        ::Vector3 position,
-        ::Vector3 rotationAxis,
-        float rotationAngle = 0.0f,
-        ::Vector3 scale = {1.0f, 1.0f, 1.0f},
-        ::Color tint = {255, 255, 255, 255}) const {
+            ::Vector3 position,
+            ::Vector3 rotationAxis,
+            Degree rotationAngle = 0.0f,
+            ::Vector3 scale = {1.0f, 1.0f, 1.0f},
+            ::Color tint = {255, 255, 255, 255}) const {
         ::DrawModelEx(*this, position, rotationAxis, rotationAngle, scale, tint);
     }
 
@@ -170,11 +173,11 @@ public:
      * Draw a model wires (with texture if set) with extended parameters
      */
     void DrawWires(
-        ::Vector3 position,
-        ::Vector3 rotationAxis,
-        float rotationAngle = 0.0f,
-        ::Vector3 scale = {1.0f, 1.0f, 1.0f},
-        ::Color tint = {255, 255, 255, 255}) const {
+            ::Vector3 position,
+            ::Vector3 rotationAxis,
+            Degree rotationAngle = 0.0f,
+            ::Vector3 scale = {1.0f, 1.0f, 1.0f},
+            ::Color tint = {255, 255, 255, 255}) const {
         ::DrawModelWiresEx(*this, position, rotationAxis, rotationAngle, scale, tint);
     }
 

@@ -2,8 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_RECTANGLE_HPP_
 
 #include "./Vector2.hpp"
-#include "./raylib-cpp-utils.hpp"
-#include "./raylib.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 /**
@@ -42,7 +41,7 @@ public:
      */
     void Draw(::Color color) const { ::DrawRectangleRec(*this, color); }
 
-    void Draw(::Vector2 origin, float rotation, ::Color color) const {
+    void Draw(::Vector2 origin, Degree rotation, ::Color color) const {
         ::DrawRectanglePro(*this, origin, rotation, color);
     }
 

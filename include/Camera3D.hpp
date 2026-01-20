@@ -75,6 +75,7 @@ public:
 
     /**
      * Update camera movement/rotation
+     * @note: rotation takes its values in degrees
      */
     Camera3D& Update(::Vector3 movement, ::Vector3 rotation, float zoom = 1.0f) {
         ::UpdateCameraPro(this, movement, rotation, zoom);

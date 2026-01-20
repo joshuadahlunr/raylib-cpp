@@ -4,6 +4,7 @@
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
 #include "./raymath.hpp"
+#include "./RadiansDegrees.hpp"
 
 #ifndef RAYLIB_CPP_NO_MATH
 #include <cmath>
@@ -106,15 +107,28 @@ public:
 
     static Matrix Translate(float x, float y, float z) { return ::MatrixTranslate(x, y, z); }
 
-    static Matrix Rotate(Vector3 axis, float angle) { return ::MatrixRotate(axis, angle); }
+    static Matrix Rotate(Vector3 axis, Radian angle) {
+        return ::MatrixRotate(axis, angle);
+    }
 
-    static Matrix RotateXYZ(Vector3 angle) { return ::MatrixRotateXYZ(angle); }
+    /**
+     * @note: angle is stored in radians 
+     */
+    static Matrix RotateXYZ(Vector3 angle) {
+        return ::MatrixRotateXYZ(angle);
+    }
 
-    static Matrix RotateX(float angle) { return ::MatrixRotateX(angle); }
+    static Matrix RotateX(Radian angle) {
+        return ::MatrixRotateX(angle);
+    }
 
-    static Matrix RotateY(float angle) { return ::MatrixRotateY(angle); }
+    static Matrix RotateY(Radian angle) {
+        return ::MatrixRotateY(angle);
+    }
 
-    static Matrix RotateZ(float angle) { return ::MatrixRotateZ(angle); }
+    static Matrix RotateZ(Radian angle) {
+        return ::MatrixRotateZ(angle);
+    }
 
     static Matrix Scale(float x, float y, float z) { return ::MatrixScale(x, y, z); }
 

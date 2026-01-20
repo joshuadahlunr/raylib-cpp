@@ -491,7 +491,7 @@ public:
     /**
      * Rotate image by input angle in degrees (-359 to 359)
      */
-    Image& Rotate(int degrees) {
+    Image& Rotate(Degree degrees) {
         ::ImageRotate(this, degrees);
         return *this;
     }

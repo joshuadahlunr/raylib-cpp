@@ -4,6 +4,7 @@
 #include <string>
 
 #include "./Vector4.hpp"
+#include "./RadiansDegrees.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
 
@@ -142,24 +143,24 @@ public:
     }
 
     void DrawText(
-        const ::Font& font,
-        const char* text,
-        ::Vector2 position,
-        ::Vector2 origin,
-        float rotation,
-        float fontSize,
-        float spacing) const {
+            const ::Font& font,
+            const char* text,
+            ::Vector2 position,
+            ::Vector2 origin,
+            Degree rotation,
+            float fontSize,
+            float spacing) const {
         ::DrawTextPro(font, text, position, origin, rotation, fontSize, spacing, *this);
     }
 
     void DrawText(
-        const ::Font& font,
-        const std::string& text,
-        ::Vector2 position,
-        ::Vector2 origin,
-        float rotation,
-        float fontSize,
-        float spacing) const {
+            const ::Font& font,
+            const std::string& text,
+            ::Vector2 position,
+            ::Vector2 origin,
+            Degree rotation,
+            float fontSize,
+            float spacing) const {
         ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, *this);
     }
 
@@ -171,7 +172,7 @@ public:
 
     void DrawRectangle(::Rectangle rec) const { ::DrawRectangleRec(rec, *this); }
 
-    void DrawRectangle(::Rectangle rec, ::Vector2 origin, float rotation) const {
+    void DrawRectangle(::Rectangle rec, ::Vector2 origin, Degree rotation) const {
         ::DrawRectanglePro(rec, origin, rotation, *this);
     }
 

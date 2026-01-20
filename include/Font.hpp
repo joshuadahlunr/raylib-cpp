@@ -242,25 +242,31 @@ public:
     }
 
     void DrawText(
-        const char* text,
-        ::Vector2 position,
-        ::Vector2 origin,
-        float rotation,
-        float fontSize,
-        float spacing,
-        ::Color tint = WHITE) const {
-        ::DrawTextPro(*this, text, position, origin, rotation, fontSize, spacing, tint);
+            const char* text,
+            ::Vector2 position,
+            ::Vector2 origin,
+            Degree rotation,
+            float fontSize,
+            float spacing,
+            ::Color tint = WHITE) const {
+        ::DrawTextPro(*this, text,
+            position, origin,
+            rotation, fontSize,
+            spacing, tint);
     }
 
     void DrawText(
-        const std::string& text,
-        ::Vector2 position,
-        ::Vector2 origin,
-        float rotation,
-        float fontSize,
-        float spacing,
-        ::Color tint = WHITE) const {
-        ::DrawTextPro(*this, text.c_str(), position, origin, rotation, fontSize, spacing, tint);
+            const std::string& text,
+            ::Vector2 position,
+            ::Vector2 origin,
+            Degree rotation,
+            float fontSize,
+            float spacing,
+            ::Color tint = WHITE) const {
+        ::DrawTextPro(*this, text.c_str(),
+            position, origin,
+            rotation, fontSize,
+            spacing, tint);
     }
 
     /**

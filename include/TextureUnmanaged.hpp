@@ -6,9 +6,8 @@
 #include "./Image.hpp"
 #include "./Material.hpp"
 #include "./RaylibException.hpp"
-#include "./Vector2.hpp"
-#include "./raylib-cpp-utils.hpp"
-#include "./raylib.hpp"
+#include "./Image.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 /**
@@ -203,7 +202,8 @@ public:
      *
      * @see ::DrawTextureEx()
      */
-    void Draw(::Vector2 position, float rotation, float scale = 1.0f, ::Color tint = {255, 255, 255, 255}) const {
+    void Draw(::Vector2 position, Degree rotation, float scale = 1.0f,
+            ::Color tint = {255, 255, 255, 255}) const {
         ::DrawTextureEx(*this, position, rotation, scale, tint);
     }
 
@@ -221,12 +221,8 @@ public:
      *
      * @see ::DrawTexturePro()
      */
-    void Draw(
-        ::Rectangle sourceRec,
-        ::Rectangle destRec,
-        ::Vector2 origin = {0, 0},
-        float rotation = 0,
-        ::Color tint = {255, 255, 255, 255}) const {
+    void Draw(::Rectangle sourceRec, ::Rectangle destRec, ::Vector2 origin = {0, 0},
+            Degree rotation = 0, ::Color tint = {255, 255, 255, 255}) const {
         ::DrawTexturePro(*this, sourceRec, destRec, origin, rotation, tint);
     }
 
@@ -235,12 +231,8 @@ public:
      *
      * @see ::DrawTextureNPatch()
      */
-    void Draw(
-        ::NPatchInfo nPatchInfo,
-        ::Rectangle destRec,
-        ::Vector2 origin = {0, 0},
-        float rotation = 0,
-        ::Color tint = {255, 255, 255, 255}) const {
+    void Draw(::NPatchInfo nPatchInfo, ::Rectangle destRec, ::Vector2 origin = {0, 0},
+            Radian rotation = 0, ::Color tint = {255, 255, 255, 255}) const {
         ::DrawTextureNPatch(*this, nPatchInfo, destRec, origin, rotation, tint);
     }
 
@@ -273,15 +265,10 @@ public:
      *
      * @see ::DrawBillboardPro()
      */
-    void DrawBillboard(
-        const ::Camera& camera,
-        ::Rectangle source,
-        Vector3 position,
-        ::Vector3 up,
-        Vector2 size,
-        Vector2 origin,
-        float rotation = 0.0f,
-        ::Color tint = {255, 255, 255, 255}) const {
+    void DrawBillboard(const ::Camera& camera,
+            ::Rectangle source, Vector3 position,
+            ::Vector3 up, Vector2 size, Vector2 origin, Degree rotation = 0.0f,
+            ::Color tint = {255, 255, 255, 255}) const {
         DrawBillboardPro(camera, *this, source, position, up, size, origin, rotation, tint);
     }
 

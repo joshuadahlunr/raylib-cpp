@@ -10,6 +10,8 @@
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
 #include "./raymath.hpp"
+#include "./raylib-cpp-utils.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 /**
@@ -244,7 +246,9 @@ public:
     /**
      * Rotate Vector by float in radians
      */
-    [[nodiscard]] Vector2 Rotate(float angle) const { return Vector2Rotate(*this, angle); }
+    Vector2 Rotate(Radian angle) const {
+        return Vector2Rotate(*this, angle);
+    }
 
     /**
      * Move Vector towards target
@@ -301,7 +305,9 @@ public:
     /**
      * Calculate angle from two vectors in X-axis
      */
-    [[nodiscard]] float Angle(const ::Vector2& vector2) const { return Vector2Angle(*this, vector2); }
+    Radian Angle(const ::Vector2& vector2) const {
+        return Vector2Angle(*this, vector2);
+    }
 
     /**
      * Vector with components value 0.0f
@@ -333,7 +339,7 @@ public:
 
     void DrawRectangle(::Vector2 size, ::Color color = {0, 0, 0, 255}) const { ::DrawRectangleV(*this, size, color); }
 
-    void DrawPoly(int sides, float radius, float rotation, ::Color color = {0, 0, 0, 255}) const {
+    void DrawPoly(int sides, float radius, Degree rotation, ::Color color = {0, 0, 0, 255}) const {
         ::DrawPoly(*this, sides, radius, rotation, color);
     }
 

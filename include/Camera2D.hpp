@@ -2,6 +2,7 @@
 #define RAYLIB_CPP_INCLUDE_CAMERA2D_HPP_
 
 #include "./Vector2.hpp"
+#include "./RadiansDegrees.hpp"
 #include "./raylib-cpp-utils.hpp"
 #include "./raylib.hpp"
 
@@ -16,9 +17,9 @@ public:
         // Nothing.
     }
 
-    Camera2D() : ::Camera2D() {}
-    Camera2D(::Vector2 offset, ::Vector2 target, float rotation = 0.0f, float zoom = 1.0f)
-        : ::Camera2D{offset, target, rotation, zoom} {}
+    Camera2D() {}
+    Camera2D(::Vector2 offset, ::Vector2 target,
+            Degree rotation = 0.0f, float zoom = 1.0f) : ::Camera2D{offset, target, rotation, zoom} {}
 
     Camera2D& BeginMode() {
         ::BeginMode2D(*this);
@@ -32,7 +33,7 @@ public:
 
     GETTERSETTER(::Vector2, Offset, offset)
     GETTERSETTER(::Vector2, Target, target)
-    GETTERSETTER(float, Rotation, rotation)
+    GETTERSETTER(Degree, Rotation, rotation)
     GETTERSETTER(float, Zoom, zoom)
 
     Camera2D& operator=(const ::Camera2D& camera) {

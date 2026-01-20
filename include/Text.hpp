@@ -5,7 +5,7 @@
 
 #include "./RaylibException.hpp"
 #include "./raylib-cpp-utils.hpp"
-#include "./raylib.hpp"
+#include "./RadiansDegrees.hpp"
 
 namespace raylib {
 /**
@@ -113,7 +113,7 @@ public:
      *
      * @see DrawTextPro()
      */
-    void Draw(const ::Vector2& position, float rotation, const ::Vector2& origin = {0, 0}) const {
+    void Draw(const ::Vector2& position, Degree rotation, const ::Vector2& origin = {0, 0}) const {
         ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, color);
     }
 
@@ -181,14 +181,14 @@ public:
      * @see ::DrawTextPro
      */
     static void Draw(
-        const ::Font& font,
-        const std::string& text,
-        const ::Vector2& position,
-        const ::Vector2& origin,
-        const float rotation,
-        const float fontSize,
-        const float spacing,
-        const ::Color& color) {
+            const ::Font& font,
+            const std::string& text,
+            const ::Vector2& position,
+            const ::Vector2& origin,
+            const Degree rotation,
+            const float fontSize,
+            const float spacing,
+            const ::Color& color) {
         ::DrawTextPro(font, text.c_str(), position, origin, rotation, fontSize, spacing, color);
     }
 };
